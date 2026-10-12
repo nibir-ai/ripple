@@ -1,0 +1,272 @@
+{
+  "changes": [
+    {
+      "after": {
+        "column": 0,
+        "end_column": 18,
+        "end_line": 2,
+        "line": 1,
+        "path": "totals.py"
+      },
+      "after_display_name": "totals",
+      "after_symbol_id": "14b301c0a0e73098a928cf68",
+      "before": {
+        "column": 0,
+        "end_column": 18,
+        "end_line": 2,
+        "line": 1,
+        "path": "pricing.py"
+      },
+      "before_display_name": "pricing",
+      "before_symbol_id": "6a9688632cc714472d24aad5",
+      "change_id": "cd1a7993ba5f1e0a6eab9c5a",
+      "display_name": "totals",
+      "kind": "symbol_relocated",
+      "match_rule": "git_file_rename_100_same_qualname_kind-v1"
+    },
+    {
+      "after": {
+        "column": 0,
+        "end_column": 18,
+        "end_line": 2,
+        "line": 1,
+        "path": "totals.py"
+      },
+      "after_display_name": "totals.calculate_total",
+      "after_symbol_id": "2bff93e6e546adc08ba41f7e",
+      "before": {
+        "column": 0,
+        "end_column": 18,
+        "end_line": 2,
+        "line": 1,
+        "path": "pricing.py"
+      },
+      "before_display_name": "pricing.calculate_total",
+      "before_symbol_id": "860ad3e5b0f9dc9eaa7558ad",
+      "change_id": "85325b95c0be060dfbd71b6c",
+      "display_name": "totals.calculate_total",
+      "kind": "symbol_relocated",
+      "match_rule": "git_file_rename_100_same_qualname_kind-v1"
+    }
+  ],
+  "comparison": {
+    "base_ref": "HEAD~1",
+    "base_source_roots": [
+      "."
+    ],
+    "base_tree": "084893b0f0cfcbb5015fff5ac9ffe459fc4e3bfe",
+    "head_ref": "HEAD",
+    "head_source_roots": [
+      "."
+    ],
+    "head_tree": "cd130ee69c8261abc6baa4391ffd5abed6e60439"
+  },
+  "completeness": {
+    "candidate_references": 0,
+    "notes": [
+      "Counts cover both snapshot sides, including identical trees.",
+      "Comparison uses normalized definitions and retains both revision graphs.",
+      "Git rename similarity is heuristic; structural relocation candidates do not merge identities.",
+      "Static evidence does not guarantee runtime behavior or safety."
+    ],
+    "parsed_files": 4,
+    "reasons": [
+      "unresolved_call",
+      "unresolved_import"
+    ],
+    "skipped_files": 0,
+    "status": "partial",
+    "truncated": false,
+    "unresolved_references": 2
+  },
+  "diagnostics": [
+    {
+      "code": "unresolved_import",
+      "line": 1,
+      "message": "Module missing from configured source scope; environment is not inferred.",
+      "path": "api.py",
+      "snapshot": "after",
+      "tree": "cd130ee69c8261abc6baa4391ffd5abed6e60439"
+    },
+    {
+      "code": "unresolved_call",
+      "line": 4,
+      "message": "Module missing from configured source scope; environment is not inferred.",
+      "path": "api.py",
+      "snapshot": "after",
+      "tree": "cd130ee69c8261abc6baa4391ffd5abed6e60439"
+    }
+  ],
+  "file_changes": [
+    {
+      "after_blob": "c031b12eca51c850da2d0c5e4da6340c8365210a",
+      "after_path": "totals.py",
+      "before_blob": "c031b12eca51c850da2d0c5e4da6340c8365210a",
+      "before_path": "pricing.py",
+      "similarity": 100,
+      "status": "renamed"
+    }
+  ],
+  "impacts": [
+    {
+      "additional_paths_possible": false,
+      "after": null,
+      "after_display_name": null,
+      "before": {
+        "column": 0,
+        "end_column": 29,
+        "end_line": 4,
+        "line": 3,
+        "path": "api.py"
+      },
+      "before_display_name": "api.checkout",
+      "category": "direct_caller",
+      "depth": 1,
+      "display_name": "api.checkout",
+      "evidence_paths": [
+        {
+          "origin_change_id": "85325b95c0be060dfbd71b6c",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "pricing.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 29,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "084893b0f0cfcbb5015fff5ac9ffe459fc4e3bfe"
+        }
+      ],
+      "origin_change_ids": [
+        "85325b95c0be060dfbd71b6c"
+      ],
+      "provenance": "before_only",
+      "resolution_state": "resolved",
+      "symbol_id": "8e513e11495c307450c1daad"
+    },
+    {
+      "additional_paths_possible": false,
+      "after": null,
+      "after_display_name": null,
+      "before": {
+        "column": 0,
+        "end_column": 22,
+        "end_line": 7,
+        "line": 6,
+        "path": "api.py"
+      },
+      "before_display_name": "api.endpoint",
+      "category": "transitive_caller",
+      "depth": 2,
+      "display_name": "api.endpoint",
+      "evidence_paths": [
+        {
+          "origin_change_id": "85325b95c0be060dfbd71b6c",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "api.checkout",
+              "caller": "api.endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.same-module-function-v1",
+              "site": {
+                "column": 11,
+                "end_column": 22,
+                "end_line": 7,
+                "line": 7,
+                "path": "api.py"
+              }
+            },
+            {
+              "callee": "pricing.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 29,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "084893b0f0cfcbb5015fff5ac9ffe459fc4e3bfe"
+        }
+      ],
+      "origin_change_ids": [
+        "85325b95c0be060dfbd71b6c"
+      ],
+      "provenance": "before_only",
+      "resolution_state": "resolved",
+      "symbol_id": "fdc4e57c8d424fb80aef908e"
+    }
+  ],
+  "match_candidates": [],
+  "policy": {
+    "id": "python-callers-v1",
+    "include_candidates": false,
+    "max_depth": 8,
+    "max_nodes": 5000
+  },
+  "repository": {
+    "root": "."
+  },
+  "schema": "ripple.report.v1",
+  "summary": {
+    "candidate_impact_count": 0,
+    "change_fact_count": 2,
+    "changed_symbol_count": 2,
+    "impacted_direct_count": 1,
+    "impacted_transitive_count": 1,
+    "relocation_candidate_count": 0
+  },
+  "symbol_matches": [
+    {
+      "after_symbol_id": "14b301c0a0e73098a928cf68",
+      "before_symbol_id": "6a9688632cc714472d24aad5",
+      "match_rule": "git_file_rename_100_same_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "2bff93e6e546adc08ba41f7e",
+      "before_symbol_id": "860ad3e5b0f9dc9eaa7558ad",
+      "match_rule": "git_file_rename_100_same_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "8f88af7a51727d7a7abbb322",
+      "before_symbol_id": "8e513e11495c307450c1daad",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "8a5922c7225afa472e351df5",
+      "before_symbol_id": "c438eb4cee1978e2e9abb494",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "1c83bdf1609a2d2927a11eec",
+      "before_symbol_id": "fdc4e57c8d424fb80aef908e",
+      "match_rule": "unique_path_qualname_kind-v1"
+    }
+  ],
+  "tool": {
+    "analyzer": "python-static-v1",
+    "base_config": "684cc0c464693e32c588576a",
+    "head_config": "684cc0c464693e32c588576a",
+    "name": "ripple",
+    "parser": "python.ast",
+    "parser_python": "3.12",
+    "rename_threshold": "90",
+    "version": "0.1.0.dev4"
+  }
+}

@@ -1,0 +1,29 @@
+RIPPLE - potential change impact
+Trees: 084893b0f0cfcbb5015fff5ac9ffe459fc4e3bfe -> cd130ee69c8261abc6baa4391ffd5abed6e60439
+Mode: Python static analysis; no target code execution
+Source roots: before .; after .
+
+CHANGES
+  symbol_relocated: totals (totals.py:1)
+    before pricing at pricing.py:1 -> after totals at totals.py:1 (git_file_rename_100_same_qualname_kind-v1; Git rename evidence is heuristic)
+  symbol_relocated: totals.calculate_total (totals.py:1)
+    before pricing.calculate_total at pricing.py:1 -> after totals.calculate_total at totals.py:1 (git_file_rename_100_same_qualname_kind-v1; Git rename evidence is heuristic)
+
+POTENTIAL CALLER IMPACT
+  api.checkout: direct_caller, depth 1, before_only [resolved]
+    Change 85325b95c0be060dfbd71b6c [before]
+      api.checkout --CALLS--> pricing.calculate_total at api.py:4:11 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+  api.endpoint: transitive_caller, depth 2, before_only [resolved]
+    Change 85325b95c0be060dfbd71b6c [before]
+      api.endpoint --CALLS--> api.checkout at api.py:7:11 (python.same-module-function-v1)
+        Unique lexical definition; runtime mutation remains possible.
+      api.checkout --CALLS--> pricing.calculate_total at api.py:4:11 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+
+COMPLETENESS
+  partial; 4 parsed files across both sides; 0 skipped; 2 unresolved references.
+  Limits: depth 8, nodes 5000; truncated: false.
+  [after] unresolved_import: api.py:1 - Module missing from configured source scope; environment is not inferred.
+  [after] unresolved_call: api.py:4 - Module missing from configured source scope; environment is not inferred.
+  Static evidence does not guarantee runtime behavior or safety.

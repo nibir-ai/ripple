@@ -1,0 +1,47 @@
+RIPPLE - potential change impact
+Trees: 577841b52b540674e2af26fdc15b6af047cd109f -> b87f06a915d3b05aa343fe47f734fb216d3b1689
+Mode: Python static analysis; no target code execution
+Source roots: before src; after src
+
+CHANGES
+  body_modified: shop.pricing.calculate_total (src/shop/pricing.py:1)
+
+POTENTIAL CALLER IMPACT
+  shop.services.Checkout.charge: direct_caller, depth 1, both [resolved]
+    Change 80cd4f58912d5a91a5beeb85 [after]
+      shop.services.Checkout.charge --CALLS--> shop.pricing.calculate_total at src/shop/services.py:6:15 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+    Change 80cd4f58912d5a91a5beeb85 [before]
+      shop.services.Checkout.charge --CALLS--> shop.pricing.calculate_total at src/shop/services.py:6:15 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+  shop.services.Checkout.receipt: transitive_caller, depth 2, both [resolved]
+    Change 80cd4f58912d5a91a5beeb85 [after]
+      shop.services.Checkout.receipt --CALLS--> shop.services.Checkout.charge at src/shop/services.py:10:15 (python.lexical-method-v2)
+        Unique lexical method; runtime subclass overrides, descriptors and mutation may change dispatch.
+      shop.services.Checkout.charge --CALLS--> shop.pricing.calculate_total at src/shop/services.py:6:15 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+    Change 80cd4f58912d5a91a5beeb85 [before]
+      shop.services.Checkout.receipt --CALLS--> shop.services.Checkout.charge at src/shop/services.py:10:15 (python.lexical-method-v2)
+        Unique lexical method; runtime subclass overrides, descriptors and mutation may change dispatch.
+      shop.services.Checkout.charge --CALLS--> shop.pricing.calculate_total at src/shop/services.py:6:15 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+  shop.api.endpoint: transitive_caller, depth 3, both [resolved]
+    Change 80cd4f58912d5a91a5beeb85 [after]
+      shop.api.endpoint --CALLS--> shop.services.Checkout.receipt at src/shop/api.py:4:11 (python.lexical-method-v2)
+        Unique lexical method; runtime subclass overrides, descriptors and mutation may change dispatch.
+      shop.services.Checkout.receipt --CALLS--> shop.services.Checkout.charge at src/shop/services.py:10:15 (python.lexical-method-v2)
+        Unique lexical method; runtime subclass overrides, descriptors and mutation may change dispatch.
+      shop.services.Checkout.charge --CALLS--> shop.pricing.calculate_total at src/shop/services.py:6:15 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+    Change 80cd4f58912d5a91a5beeb85 [before]
+      shop.api.endpoint --CALLS--> shop.services.Checkout.receipt at src/shop/api.py:4:11 (python.lexical-method-v2)
+        Unique lexical method; runtime subclass overrides, descriptors and mutation may change dispatch.
+      shop.services.Checkout.receipt --CALLS--> shop.services.Checkout.charge at src/shop/services.py:10:15 (python.lexical-method-v2)
+        Unique lexical method; runtime subclass overrides, descriptors and mutation may change dispatch.
+      shop.services.Checkout.charge --CALLS--> shop.pricing.calculate_total at src/shop/services.py:6:15 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+
+COMPLETENESS
+  complete_within_static_policy; 8 parsed files across both sides; 0 skipped; 0 unresolved references.
+  Limits: depth 8, nodes 5000; truncated: false.
+  Static evidence does not guarantee runtime behavior or safety.

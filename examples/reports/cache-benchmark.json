@@ -1,0 +1,46 @@
+{
+  "changed_full_seconds": 3.8173368999996455,
+  "changed_full_work": {
+    "blob_reads": 64,
+    "parsed_files": 64,
+    "resolution_passes": 1,
+    "snapshot_hits": 0,
+    "syntax_hits": 0,
+    "warnings": []
+  },
+  "cold_cache_seconds": 2.8706210999989707,
+  "cold_work": {
+    "blob_reads": 64,
+    "parsed_files": 64,
+    "resolution_passes": 1,
+    "snapshot_hits": 0,
+    "syntax_hits": 0,
+    "warnings": []
+  },
+  "fixture_files": 64,
+  "full_median_seconds": 2.4668648000006215,
+  "functions_per_file": 16,
+  "incremental_seconds": 1.0614127000008011,
+  "incremental_work": {
+    "blob_reads": 1,
+    "parsed_files": 1,
+    "resolution_passes": 1,
+    "snapshot_hits": 0,
+    "syntax_hits": 63,
+    "warnings": []
+  },
+  "platform": "Windows",
+  "python": "3.12.0",
+  "scope": "Local synthetic fixture; not a production throughput guarantee.",
+  "snapshot_parity": true,
+  "warm_median_seconds": 0.15060610000000452,
+  "warm_repetitions": 3,
+  "warm_work": {
+    "blob_reads": 0,
+    "parsed_files": 0,
+    "resolution_passes": 0,
+    "snapshot_hits": 1,
+    "syntax_hits": 0,
+    "warnings": []
+  }
+}

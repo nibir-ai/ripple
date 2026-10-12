@@ -1,0 +1,444 @@
+{
+  "changes": [
+    {
+      "after": {
+        "column": 0,
+        "end_column": 18,
+        "end_line": 2,
+        "line": 1,
+        "path": "src/shop/pricing.py"
+      },
+      "after_display_name": "shop.pricing.calculate_total",
+      "after_symbol_id": "8d3b9320364557d72493f95c",
+      "before": {
+        "column": 0,
+        "end_column": 18,
+        "end_line": 2,
+        "line": 1,
+        "path": "src/shop/pricing.py"
+      },
+      "before_display_name": "shop.pricing.calculate_total",
+      "before_symbol_id": "d93c7951629eff7abfb9015b",
+      "change_id": "80cd4f58912d5a91a5beeb85",
+      "display_name": "shop.pricing.calculate_total",
+      "kind": "body_modified",
+      "match_rule": "unique_path_qualname_kind-v1"
+    }
+  ],
+  "comparison": {
+    "base_ref": "HEAD~1",
+    "base_source_roots": [
+      "src"
+    ],
+    "base_tree": "577841b52b540674e2af26fdc15b6af047cd109f",
+    "head_ref": "HEAD",
+    "head_source_roots": [
+      "src"
+    ],
+    "head_tree": "b87f06a915d3b05aa343fe47f734fb216d3b1689"
+  },
+  "completeness": {
+    "candidate_references": 0,
+    "notes": [
+      "Counts cover both snapshot sides, including identical trees.",
+      "Comparison uses normalized definitions and retains both revision graphs.",
+      "Git rename similarity is heuristic; structural relocation candidates do not merge identities.",
+      "Static evidence does not guarantee runtime behavior or safety."
+    ],
+    "parsed_files": 8,
+    "reasons": [],
+    "skipped_files": 0,
+    "status": "complete_within_static_policy",
+    "truncated": false,
+    "unresolved_references": 0
+  },
+  "diagnostics": [],
+  "file_changes": [
+    {
+      "after_blob": "4d1080c2ae9fa71b193e73d6e04fb1ddf57f68ac",
+      "after_path": "src/shop/pricing.py",
+      "before_blob": "c031b12eca51c850da2d0c5e4da6340c8365210a",
+      "before_path": "src/shop/pricing.py",
+      "similarity": null,
+      "status": "modified"
+    }
+  ],
+  "impacts": [
+    {
+      "additional_paths_possible": false,
+      "after": {
+        "column": 4,
+        "end_column": 23,
+        "end_line": 6,
+        "line": 4,
+        "path": "src/shop/services.py"
+      },
+      "after_display_name": "shop.services.Checkout.charge",
+      "before": {
+        "column": 4,
+        "end_column": 23,
+        "end_line": 6,
+        "line": 4,
+        "path": "src/shop/services.py"
+      },
+      "before_display_name": "shop.services.Checkout.charge",
+      "category": "direct_caller",
+      "depth": 1,
+      "display_name": "shop.services.Checkout.charge",
+      "evidence_paths": [
+        {
+          "origin_change_id": "80cd4f58912d5a91a5beeb85",
+          "snapshot": "after",
+          "steps": [
+            {
+              "callee": "shop.pricing.calculate_total",
+              "caller": "shop.services.Checkout.charge",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 15,
+                "end_column": 23,
+                "end_line": 6,
+                "line": 6,
+                "path": "src/shop/services.py"
+              }
+            }
+          ],
+          "tree": "b87f06a915d3b05aa343fe47f734fb216d3b1689"
+        },
+        {
+          "origin_change_id": "80cd4f58912d5a91a5beeb85",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "shop.pricing.calculate_total",
+              "caller": "shop.services.Checkout.charge",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 15,
+                "end_column": 23,
+                "end_line": 6,
+                "line": 6,
+                "path": "src/shop/services.py"
+              }
+            }
+          ],
+          "tree": "577841b52b540674e2af26fdc15b6af047cd109f"
+        }
+      ],
+      "origin_change_ids": [
+        "80cd4f58912d5a91a5beeb85"
+      ],
+      "provenance": "both",
+      "resolution_state": "resolved",
+      "symbol_id": "e2c7090bfd917d1eaed09b82"
+    },
+    {
+      "additional_paths_possible": false,
+      "after": {
+        "column": 4,
+        "end_column": 28,
+        "end_line": 10,
+        "line": 8,
+        "path": "src/shop/services.py"
+      },
+      "after_display_name": "shop.services.Checkout.receipt",
+      "before": {
+        "column": 4,
+        "end_column": 28,
+        "end_line": 10,
+        "line": 8,
+        "path": "src/shop/services.py"
+      },
+      "before_display_name": "shop.services.Checkout.receipt",
+      "category": "transitive_caller",
+      "depth": 2,
+      "display_name": "shop.services.Checkout.receipt",
+      "evidence_paths": [
+        {
+          "origin_change_id": "80cd4f58912d5a91a5beeb85",
+          "snapshot": "after",
+          "steps": [
+            {
+              "callee": "shop.services.Checkout.charge",
+              "caller": "shop.services.Checkout.receipt",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical method; runtime subclass overrides, descriptors and mutation may change dispatch.",
+              "resolver_rule": "python.lexical-method-v2",
+              "site": {
+                "column": 15,
+                "end_column": 28,
+                "end_line": 10,
+                "line": 10,
+                "path": "src/shop/services.py"
+              }
+            },
+            {
+              "callee": "shop.pricing.calculate_total",
+              "caller": "shop.services.Checkout.charge",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 15,
+                "end_column": 23,
+                "end_line": 6,
+                "line": 6,
+                "path": "src/shop/services.py"
+              }
+            }
+          ],
+          "tree": "b87f06a915d3b05aa343fe47f734fb216d3b1689"
+        },
+        {
+          "origin_change_id": "80cd4f58912d5a91a5beeb85",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "shop.services.Checkout.charge",
+              "caller": "shop.services.Checkout.receipt",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical method; runtime subclass overrides, descriptors and mutation may change dispatch.",
+              "resolver_rule": "python.lexical-method-v2",
+              "site": {
+                "column": 15,
+                "end_column": 28,
+                "end_line": 10,
+                "line": 10,
+                "path": "src/shop/services.py"
+              }
+            },
+            {
+              "callee": "shop.pricing.calculate_total",
+              "caller": "shop.services.Checkout.charge",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 15,
+                "end_column": 23,
+                "end_line": 6,
+                "line": 6,
+                "path": "src/shop/services.py"
+              }
+            }
+          ],
+          "tree": "577841b52b540674e2af26fdc15b6af047cd109f"
+        }
+      ],
+      "origin_change_ids": [
+        "80cd4f58912d5a91a5beeb85"
+      ],
+      "provenance": "both",
+      "resolution_state": "resolved",
+      "symbol_id": "563bbb6288d58062cfd98798"
+    },
+    {
+      "additional_paths_possible": false,
+      "after": {
+        "column": 0,
+        "end_column": 30,
+        "end_line": 4,
+        "line": 3,
+        "path": "src/shop/api.py"
+      },
+      "after_display_name": "shop.api.endpoint",
+      "before": {
+        "column": 0,
+        "end_column": 30,
+        "end_line": 4,
+        "line": 3,
+        "path": "src/shop/api.py"
+      },
+      "before_display_name": "shop.api.endpoint",
+      "category": "transitive_caller",
+      "depth": 3,
+      "display_name": "shop.api.endpoint",
+      "evidence_paths": [
+        {
+          "origin_change_id": "80cd4f58912d5a91a5beeb85",
+          "snapshot": "after",
+          "steps": [
+            {
+              "callee": "shop.services.Checkout.receipt",
+              "caller": "shop.api.endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical method; runtime subclass overrides, descriptors and mutation may change dispatch.",
+              "resolver_rule": "python.lexical-method-v2",
+              "site": {
+                "column": 11,
+                "end_column": 30,
+                "end_line": 4,
+                "line": 4,
+                "path": "src/shop/api.py"
+              }
+            },
+            {
+              "callee": "shop.services.Checkout.charge",
+              "caller": "shop.services.Checkout.receipt",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical method; runtime subclass overrides, descriptors and mutation may change dispatch.",
+              "resolver_rule": "python.lexical-method-v2",
+              "site": {
+                "column": 15,
+                "end_column": 28,
+                "end_line": 10,
+                "line": 10,
+                "path": "src/shop/services.py"
+              }
+            },
+            {
+              "callee": "shop.pricing.calculate_total",
+              "caller": "shop.services.Checkout.charge",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 15,
+                "end_column": 23,
+                "end_line": 6,
+                "line": 6,
+                "path": "src/shop/services.py"
+              }
+            }
+          ],
+          "tree": "b87f06a915d3b05aa343fe47f734fb216d3b1689"
+        },
+        {
+          "origin_change_id": "80cd4f58912d5a91a5beeb85",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "shop.services.Checkout.receipt",
+              "caller": "shop.api.endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical method; runtime subclass overrides, descriptors and mutation may change dispatch.",
+              "resolver_rule": "python.lexical-method-v2",
+              "site": {
+                "column": 11,
+                "end_column": 30,
+                "end_line": 4,
+                "line": 4,
+                "path": "src/shop/api.py"
+              }
+            },
+            {
+              "callee": "shop.services.Checkout.charge",
+              "caller": "shop.services.Checkout.receipt",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical method; runtime subclass overrides, descriptors and mutation may change dispatch.",
+              "resolver_rule": "python.lexical-method-v2",
+              "site": {
+                "column": 15,
+                "end_column": 28,
+                "end_line": 10,
+                "line": 10,
+                "path": "src/shop/services.py"
+              }
+            },
+            {
+              "callee": "shop.pricing.calculate_total",
+              "caller": "shop.services.Checkout.charge",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 15,
+                "end_column": 23,
+                "end_line": 6,
+                "line": 6,
+                "path": "src/shop/services.py"
+              }
+            }
+          ],
+          "tree": "577841b52b540674e2af26fdc15b6af047cd109f"
+        }
+      ],
+      "origin_change_ids": [
+        "80cd4f58912d5a91a5beeb85"
+      ],
+      "provenance": "both",
+      "resolution_state": "resolved",
+      "symbol_id": "0976e0bf0430e805b3aecdb5"
+    }
+  ],
+  "match_candidates": [],
+  "policy": {
+    "id": "python-callers-v1",
+    "include_candidates": false,
+    "max_depth": 8,
+    "max_nodes": 5000
+  },
+  "repository": {
+    "root": "."
+  },
+  "schema": "ripple.report.v1",
+  "summary": {
+    "candidate_impact_count": 0,
+    "change_fact_count": 1,
+    "changed_symbol_count": 1,
+    "impacted_direct_count": 1,
+    "impacted_transitive_count": 2,
+    "relocation_candidate_count": 0
+  },
+  "symbol_matches": [
+    {
+      "after_symbol_id": "67fb6a32bcb5f8caff9b5b9a",
+      "before_symbol_id": "110100e638716fb2839bde65",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "eee64dfa3e339fb4bd47d92d",
+      "before_symbol_id": "1fc2ef3a5e2417235e0eda71",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "e2c7090bfd917d1eaed09b82",
+      "before_symbol_id": "6278c300c6ec6c4dda60535d",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "563bbb6288d58062cfd98798",
+      "before_symbol_id": "9995c9c0a5b1ec976499bed9",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "fba9a386e1a113899836be92",
+      "before_symbol_id": "9a2d8846a3e6654c1de58ec0",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "a54ea6e3be24dc0edeb73347",
+      "before_symbol_id": "bbc63757b3b52a1068c4910a",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "0976e0bf0430e805b3aecdb5",
+      "before_symbol_id": "cd4f31131de71caff9c8ddb2",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "ba898b92a7c595b82e5ca963",
+      "before_symbol_id": "d2cac04945d9567cfa4608c8",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "8d3b9320364557d72493f95c",
+      "before_symbol_id": "d93c7951629eff7abfb9015b",
+      "match_rule": "unique_path_qualname_kind-v1"
+    }
+  ],
+  "tool": {
+    "analyzer": "python-static-v1",
+    "base_config": "b2e1071bd785732e92915294",
+    "head_config": "b2e1071bd785732e92915294",
+    "name": "ripple",
+    "parser": "python.ast",
+    "parser_python": "3.12",
+    "rename_threshold": "90",
+    "version": "0.1.0.dev4"
+  }
+}

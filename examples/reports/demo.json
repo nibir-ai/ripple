@@ -1,0 +1,296 @@
+{
+  "changes": [
+    {
+      "after": {
+        "column": 0,
+        "end_column": 18,
+        "end_line": 2,
+        "line": 1,
+        "path": "service.py"
+      },
+      "after_display_name": "service.calculate_total",
+      "after_symbol_id": "5a690f2c42342468462239ec",
+      "before": {
+        "column": 0,
+        "end_column": 18,
+        "end_line": 2,
+        "line": 1,
+        "path": "service.py"
+      },
+      "before_display_name": "service.calculate_total",
+      "before_symbol_id": "8da8290c913c148bae41a316",
+      "change_id": "9a136a4f35940602dba5a5d8",
+      "display_name": "service.calculate_total",
+      "kind": "body_modified",
+      "match_rule": "unique_path_qualname_kind-v1"
+    }
+  ],
+  "comparison": {
+    "base_ref": "HEAD~1",
+    "base_source_roots": [
+      "."
+    ],
+    "base_tree": "c37348802abb87566f8f6beebef029012c51cdd2",
+    "head_ref": "HEAD",
+    "head_source_roots": [
+      "."
+    ],
+    "head_tree": "9c8669c58ee5163adf6bfbe6d767cd303f0e0338"
+  },
+  "completeness": {
+    "candidate_references": 0,
+    "notes": [
+      "Counts cover both snapshot sides, including identical trees.",
+      "Comparison uses normalized definitions and retains both revision graphs.",
+      "Git rename similarity is heuristic; structural relocation candidates do not merge identities.",
+      "Static evidence does not guarantee runtime behavior or safety."
+    ],
+    "parsed_files": 4,
+    "reasons": [],
+    "skipped_files": 0,
+    "status": "complete_within_static_policy",
+    "truncated": false,
+    "unresolved_references": 0
+  },
+  "diagnostics": [],
+  "file_changes": [
+    {
+      "after_blob": "6758c0cf143ec046449cd2a99b42e1fddd5eaf84",
+      "after_path": "service.py",
+      "before_blob": "22b850271d911e458e1bde3f7f1dfa5b302c871a",
+      "before_path": "service.py",
+      "similarity": null,
+      "status": "modified"
+    }
+  ],
+  "impacts": [
+    {
+      "additional_paths_possible": false,
+      "after": {
+        "column": 0,
+        "end_column": 19,
+        "end_line": 4,
+        "line": 3,
+        "path": "api.py"
+      },
+      "after_display_name": "api.checkout",
+      "before": {
+        "column": 0,
+        "end_column": 19,
+        "end_line": 4,
+        "line": 3,
+        "path": "api.py"
+      },
+      "before_display_name": "api.checkout",
+      "category": "direct_caller",
+      "depth": 1,
+      "display_name": "api.checkout",
+      "evidence_paths": [
+        {
+          "origin_change_id": "9a136a4f35940602dba5a5d8",
+          "snapshot": "after",
+          "steps": [
+            {
+              "callee": "service.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 19,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "9c8669c58ee5163adf6bfbe6d767cd303f0e0338"
+        },
+        {
+          "origin_change_id": "9a136a4f35940602dba5a5d8",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "service.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 19,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "c37348802abb87566f8f6beebef029012c51cdd2"
+        }
+      ],
+      "origin_change_ids": [
+        "9a136a4f35940602dba5a5d8"
+      ],
+      "provenance": "both",
+      "resolution_state": "resolved",
+      "symbol_id": "8f2de78246ac1ef6bc91613f"
+    },
+    {
+      "additional_paths_possible": false,
+      "after": {
+        "column": 0,
+        "end_column": 22,
+        "end_line": 7,
+        "line": 6,
+        "path": "api.py"
+      },
+      "after_display_name": "api.endpoint",
+      "before": {
+        "column": 0,
+        "end_column": 22,
+        "end_line": 7,
+        "line": 6,
+        "path": "api.py"
+      },
+      "before_display_name": "api.endpoint",
+      "category": "transitive_caller",
+      "depth": 2,
+      "display_name": "api.endpoint",
+      "evidence_paths": [
+        {
+          "origin_change_id": "9a136a4f35940602dba5a5d8",
+          "snapshot": "after",
+          "steps": [
+            {
+              "callee": "api.checkout",
+              "caller": "api.endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.same-module-function-v1",
+              "site": {
+                "column": 11,
+                "end_column": 22,
+                "end_line": 7,
+                "line": 7,
+                "path": "api.py"
+              }
+            },
+            {
+              "callee": "service.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 19,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "9c8669c58ee5163adf6bfbe6d767cd303f0e0338"
+        },
+        {
+          "origin_change_id": "9a136a4f35940602dba5a5d8",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "api.checkout",
+              "caller": "api.endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.same-module-function-v1",
+              "site": {
+                "column": 11,
+                "end_column": 22,
+                "end_line": 7,
+                "line": 7,
+                "path": "api.py"
+              }
+            },
+            {
+              "callee": "service.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 19,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "c37348802abb87566f8f6beebef029012c51cdd2"
+        }
+      ],
+      "origin_change_ids": [
+        "9a136a4f35940602dba5a5d8"
+      ],
+      "provenance": "both",
+      "resolution_state": "resolved",
+      "symbol_id": "538205f46dd3cf338ab06fd8"
+    }
+  ],
+  "match_candidates": [],
+  "policy": {
+    "id": "python-callers-v1",
+    "include_candidates": false,
+    "max_depth": 8,
+    "max_nodes": 5000
+  },
+  "repository": {
+    "root": "."
+  },
+  "schema": "ripple.report.v1",
+  "summary": {
+    "candidate_impact_count": 0,
+    "change_fact_count": 1,
+    "changed_symbol_count": 1,
+    "impacted_direct_count": 1,
+    "impacted_transitive_count": 1,
+    "relocation_candidate_count": 0
+  },
+  "symbol_matches": [
+    {
+      "after_symbol_id": "538205f46dd3cf338ab06fd8",
+      "before_symbol_id": "1c65c85b951c9b558bdf501f",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "8f2de78246ac1ef6bc91613f",
+      "before_symbol_id": "453206901c1d459f3875f596",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "ad132749f93139084f648cba",
+      "before_symbol_id": "578eeebcde6a2f1592199051",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "5a690f2c42342468462239ec",
+      "before_symbol_id": "8da8290c913c148bae41a316",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "52de37e7ece9d1c774700096",
+      "before_symbol_id": "b3ce0666c1b71e25b23deb4a",
+      "match_rule": "unique_path_qualname_kind-v1"
+    }
+  ],
+  "tool": {
+    "analyzer": "python-static-v1",
+    "base_config": "684cc0c464693e32c588576a",
+    "head_config": "684cc0c464693e32c588576a",
+    "name": "ripple",
+    "parser": "python.ast",
+    "parser_python": "3.12",
+    "rename_threshold": "90",
+    "version": "0.1.0.dev4"
+  }
+}

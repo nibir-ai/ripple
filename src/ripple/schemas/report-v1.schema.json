@@ -1,0 +1,645 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ripple:report:v1",
+  "title": "Ripple evidence report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "tool",
+    "repository",
+    "comparison",
+    "policy",
+    "summary",
+    "changes",
+    "impacts",
+    "diagnostics",
+    "completeness"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ripple.report.v1"
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "required": [
+        "name",
+        "version",
+        "parser",
+        "analyzer"
+      ]
+    },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "root"
+      ],
+      "properties": {
+        "root": {
+          "const": "."
+        }
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base_ref",
+        "base_tree",
+        "head_ref",
+        "head_tree"
+      ],
+      "properties": {
+        "base_ref": {
+          "type": "string"
+        },
+        "head_ref": {
+          "type": "string"
+        },
+        "base_tree": {
+          "$ref": "#/$defs/oid"
+        },
+        "head_tree": {
+          "$ref": "#/$defs/oid"
+        },
+        "base_source_roots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "head_source_roots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "max_depth",
+        "max_nodes",
+        "include_candidates"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "max_depth": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_nodes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "include_candidates": {
+          "type": "boolean"
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/count"
+      },
+      "required": [
+        "changed_symbol_count",
+        "change_fact_count",
+        "impacted_direct_count",
+        "impacted_transitive_count",
+        "candidate_impact_count"
+      ]
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/change"
+      }
+    },
+    "impacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/impact"
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "message",
+          "path",
+          "line",
+          "snapshot",
+          "tree"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "line": {
+            "$ref": "#/$defs/count"
+          },
+          "snapshot": {
+            "enum": [
+              "before",
+              "after",
+              "comparison"
+            ]
+          },
+          "tree": {
+            "$ref": "#/$defs/oid"
+          }
+        }
+      }
+    },
+    "completeness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "parsed_files",
+        "skipped_files",
+        "unresolved_references",
+        "candidate_references",
+        "truncated",
+        "reasons",
+        "notes"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "partial",
+            "complete_within_static_policy"
+          ]
+        },
+        "parsed_files": {
+          "$ref": "#/$defs/count"
+        },
+        "skipped_files": {
+          "$ref": "#/$defs/count"
+        },
+        "unresolved_references": {
+          "$ref": "#/$defs/count"
+        },
+        "candidate_references": {
+          "$ref": "#/$defs/count"
+        },
+        "truncated": {
+          "type": "boolean"
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "file_changes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/file_change"
+      }
+    },
+    "symbol_matches": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/symbol_match"
+      }
+    },
+    "match_candidates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/match_candidate"
+      }
+    }
+  },
+  "$defs": {
+    "count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "oid": {
+      "type": "string",
+      "pattern": "^([0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "line",
+        "column",
+        "end_line",
+        "end_column"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "column": {
+          "$ref": "#/$defs/count"
+        },
+        "end_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_column": {
+          "$ref": "#/$defs/count"
+        }
+      }
+    },
+    "change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "change_id",
+        "kind",
+        "display_name",
+        "before_symbol_id",
+        "after_symbol_id",
+        "before",
+        "after",
+        "match_rule"
+      ],
+      "properties": {
+        "change_id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "body_modified",
+            "signature_modified",
+            "decorators_modified",
+            "symbol_added",
+            "symbol_removed",
+            "symbol_relocated",
+            "docstring_modified",
+            "class_body_modified",
+            "module_body_modified",
+            "bases_modified",
+            "imports_modified"
+          ]
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "before_symbol_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "after_symbol_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "before": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/location"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/location"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "match_rule": {
+          "type": "string"
+        },
+        "before_display_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "after_display_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "impact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "symbol_id",
+        "display_name",
+        "category",
+        "depth",
+        "provenance",
+        "resolution_state",
+        "origin_change_ids",
+        "evidence_paths"
+      ],
+      "properties": {
+        "symbol_id": {
+          "type": "string"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "direct_caller",
+            "transitive_caller"
+          ]
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "provenance": {
+          "enum": [
+            "both",
+            "before_only",
+            "after_only"
+          ]
+        },
+        "resolution_state": {
+          "const": "resolved"
+        },
+        "origin_change_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence_paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "before_display_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "after_display_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "before": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/location"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/location"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additional_paths_possible": {
+          "type": "boolean"
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin_change_id",
+        "snapshot",
+        "tree",
+        "steps"
+      ],
+      "properties": {
+        "origin_change_id": {
+          "type": "string"
+        },
+        "snapshot": {
+          "enum": [
+            "before",
+            "after"
+          ]
+        },
+        "tree": {
+          "$ref": "#/$defs/oid"
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "edge_type",
+              "caller",
+              "callee",
+              "site",
+              "resolver_rule"
+            ],
+            "properties": {
+              "edge_type": {
+                "const": "CALLS"
+              },
+              "caller": {
+                "type": "string"
+              },
+              "callee": {
+                "type": "string"
+              },
+              "site": {
+                "$ref": "#/$defs/location"
+              },
+              "resolver_rule": {
+                "type": "string"
+              },
+              "explanation": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "file_change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "before_path",
+        "after_path",
+        "before_blob",
+        "after_blob",
+        "similarity"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "added",
+            "deleted",
+            "modified",
+            "renamed",
+            "copied",
+            "type_changed",
+            "unknown"
+          ]
+        },
+        "before_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "after_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "before_blob": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/oid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_blob": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/oid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "similarity": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "symbol_match": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before_symbol_id",
+        "after_symbol_id",
+        "match_rule"
+      ],
+      "properties": {
+        "before_symbol_id": {
+          "type": "string"
+        },
+        "after_symbol_id": {
+          "type": "string"
+        },
+        "match_rule": {
+          "type": "string"
+        }
+      }
+    },
+    "match_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before_symbol_ids",
+        "after_symbol_ids",
+        "before_names",
+        "after_names",
+        "match_rule",
+        "explanation"
+      ],
+      "properties": {
+        "before_symbol_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "after_symbol_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "before_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "after_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "match_rule": {
+          "type": "string"
+        },
+        "explanation": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ['3.11', '3.12', '3.13', '3.14']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m ruff check .
+      - run: python -m ruff format --check .
+      - run: python -m mypy
+      - run: python -m pytest
+      - run: python -m build
+      - run: python examples/demo.py --destination .demo
+      - run: ripple analyze --repo .demo --strict
+      - run: python examples/demo.py --destination .demo-package --package
+      - run: ripple analyze --repo .demo-package --strict
+      - run: ripple analyze --repo .demo-package --strict --cache-stats
+      - run: ripple doctor --repo .demo-package --format json
+      - run: ripple status --repo .demo-package --format json
+      - run: python examples/demo.py --destination .demo-rename --rename
+      - run: ripple analyze --repo .demo-rename
+      - name: Clean wheel smoke test
+        shell: bash
+        run: |
+          python -m venv .wheel-venv
+          if [ "$RUNNER_OS" = "Windows" ]; then BIN=.wheel-venv/Scripts; else BIN=.wheel-venv/bin; fi
+          "$BIN/python" -m pip install --no-deps dist/*.whl
+          "$BIN/ripple" --version
+          "$BIN/ripple" analyze --repo .demo --strict
+          "$BIN/ripple" analyze --repo .demo-package --strict
+          "$BIN/ripple" doctor --repo .demo-package --format json
+          "$BIN/ripple" analyze --repo .demo-rename

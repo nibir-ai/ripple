@@ -1,0 +1,32 @@
+RIPPLE - potential change impact
+Trees: c37348802abb87566f8f6beebef029012c51cdd2 -> 9c8669c58ee5163adf6bfbe6d767cd303f0e0338
+Mode: Python static analysis; no target code execution
+Source roots: before .; after .
+
+CHANGES
+  body_modified: service.calculate_total (service.py:1)
+
+POTENTIAL CALLER IMPACT
+  api.checkout: direct_caller, depth 1, both [resolved]
+    Change 9a136a4f35940602dba5a5d8 [after]
+      api.checkout --CALLS--> service.calculate_total at api.py:4:11 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+    Change 9a136a4f35940602dba5a5d8 [before]
+      api.checkout --CALLS--> service.calculate_total at api.py:4:11 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+  api.endpoint: transitive_caller, depth 2, both [resolved]
+    Change 9a136a4f35940602dba5a5d8 [after]
+      api.endpoint --CALLS--> api.checkout at api.py:7:11 (python.same-module-function-v1)
+        Unique lexical definition; runtime mutation remains possible.
+      api.checkout --CALLS--> service.calculate_total at api.py:4:11 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+    Change 9a136a4f35940602dba5a5d8 [before]
+      api.endpoint --CALLS--> api.checkout at api.py:7:11 (python.same-module-function-v1)
+        Unique lexical definition; runtime mutation remains possible.
+      api.checkout --CALLS--> service.calculate_total at api.py:4:11 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+
+COMPLETENESS
+  complete_within_static_policy; 4 parsed files across both sides; 0 skipped; 0 unresolved references.
+  Limits: depth 8, nodes 5000; truncated: false.
+  Static evidence does not guarantee runtime behavior or safety.
