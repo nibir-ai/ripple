@@ -27,10 +27,13 @@ before + after graphs + Git file diff → revision relations/changes → incomin
 ```
 
 The graph algorithm consumes immutable snapshots without filesystem or Git side effects.
-Compatible snapshots and syntax are stored outside source repositories in SQLite;
-An interactive terminal interface is not yet implemented. Runtime dependencies
-are the standard library (including SQLite) and the installed Git
-executable. Development/build dependencies are isolated in virtual environments.
+Compatible snapshots and syntax are stored outside source repositories in SQLite.
+The headless runtime uses the standard library (including SQLite) and installed Git.
+The optional `tui` extra adds Textual. `explorer_data.py` loads validated report sessions
+and immutable source excerpts; `explorer.py` presents the report through synchronized
+panes and dialogs. Report loading and source reads use background workers, with generation
+checks that discard obsolete results. Navigation and filtering use in-memory report data.
+Development/build dependencies are isolated in virtual environments.
 
 See `analyzer-semantics.md` for resolution and comparison rules.
 

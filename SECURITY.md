@@ -48,3 +48,11 @@ or migrate databases. Owned corrupt/incompatible databases are quarantined rathe
 overwritten. Scoped cache clear deletes active workspace rows only; it never recursively
 deletes directories, source files or other workspace caches. Quarantines retain source
 data until manually removed. There is no automatic eviction, encryption or network cache.
+
+The optional explorer reads source only from immutable report tree IDs through the same
+bounded Git interface. It never opens dirty source files or runs an editor, clipboard
+command or target tests. Source context contains at most eight lines and 8 KiB of text;
+long lines are clipped around the selected byte column. A session retains at most eight
+source blobs (16 MiB). Text is rendered literally after terminal-control sanitization.
+Canceled workers discard obsolete results; a running Git command may finish within its
+existing 20-second process timeout. Textual restores the terminal on quit or failure.

@@ -44,3 +44,5 @@ jobs:
           "$BIN/ripple" analyze --repo .demo-rename
           "$BIN/ripple" analyze --repo .demo-tests --strict
           "$BIN/ripple" explain tests.test_service.test_endpoint --repo .demo-tests --format json
+          for RIPPLE_WHEEL in dist/*.whl; do "$BIN/python" -m pip install "${RIPPLE_WHEEL}[tui]" pytest; done
+          "$BIN/python" -m pytest tests/test_explorer.py

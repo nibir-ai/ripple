@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.0.dev6 — 2026-10-13
+
+Added an optional Textual terminal explorer with synchronized changes, caller groups
+and immutable source evidence. Keyboard navigation, search, change filters, retained
+paths, related tests, diagnostics and location dialogs share the validated report model.
+Layouts adapt to wide, medium and narrow terminals. Saved analyses reject stale data
+unless explicitly allowed; exported reports remain portable without source access.
+Background workers keep navigation responsive and discard obsolete reads. Source excerpts
+and blob retention are bounded. The standard-library headless runtime is unchanged.
+
 ## 0.1.0.dev5 — 2026-10-13
 
 Added saved-report evidence inspection by symbol name, ID or source location, with

@@ -1,7 +1,8 @@
 # CLI contract
 
 `ripple --help`, `ripple --version`, `ripple index`, `ripple analyze` are implemented.
-`ripple status`, `ripple doctor`, `ripple cache clear` and `ripple explain` are also implemented.
+`ripple status`, `ripple doctor`, `ripple cache clear`, `ripple explain` and `ripple explore`
+are also implemented.
 `--repo PATH`, `--format text|json`, `--strict` belong after the command.
 Index accepts `--ref` (default HEAD). Analyze accepts `--base` (HEAD~1), `--head` (HEAD),
 `--max-depth` (8), `--max-nodes` (5,000), both positive integers.
@@ -37,8 +38,8 @@ files, other namespaces, owner markers and quarantines. See `cache.md` for exact
 
 Exit codes: 0 success (impacts are information); 1 I/O failure; 2 invalid CLI usage;
 3 Git/repository/ref/resource failure; 4 strict partial report; 130 interruption.
-No color/interactive progress is emitted. Text escapes terminal controls.
-`explore`, config and file-export commands are deferred.
+Headless commands emit no color/interactive progress. Text escapes terminal controls.
+Config and file-export commands are deferred; shell redirection exports JSON.
 
 Explain selects one impacted symbol by an exact name, `--symbol-id ID` or
 `--path file.py:line`. It reads the latest completed workspace report by default;
@@ -47,3 +48,12 @@ Explain selects one impacted symbol by an exact name, `--symbol-id ID` or
 a repository or checking current HEAD. `--format json` emits a report projection
 with one impact and its initiating changes, retaining original completeness and policy.
 Invalid, absent or ambiguous selections exit 2 without partial stdout. See `reports.md`.
+
+Explore requires an interactive input/output terminal and the optional `tui` extra.
+It accepts `--repo`, `--cache-dir`, `--base`, `--head`, `--report`, `--analysis`,
+`--allow-stale` and `--no-color`. Saved data and explicit revision refs are mutually
+exclusive. Without refs, a current saved analysis is preferred; otherwise HEAD~1..HEAD
+is analyzed. An exact saved analysis requires `--allow-stale` if its HEAD tree,
+configuration or tool version differs. Exported reports keep original provenance.
+Noninteractive terminals and missing dependencies exit 2 with plain stderr. Load failures
+remain visible and quittable, returning their error code on quit. See `explorer.md`.

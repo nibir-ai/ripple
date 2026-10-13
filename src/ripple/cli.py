@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from dataclasses import asdict
 from pathlib import Path
@@ -91,6 +92,16 @@ def parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Inspect a historical cached report with its original provenance",
     )
+    explore = commands.add_parser("explore", help="Open the keyboard-driven terminal explorer")
+    explore.add_argument("--repo", type=Path, default=Path.cwd())
+    explore.add_argument("--cache-dir", type=Path)
+    explore.add_argument("--base", help="Compare this base ref instead of opening the saved report")
+    explore.add_argument("--head", help="Compare this head ref (default: HEAD)")
+    explore_saved = explore.add_mutually_exclusive_group()
+    explore_saved.add_argument("--report", type=Path, help="Open exported report data")
+    explore_saved.add_argument("--analysis", help="Open an exact saved analysis ID")
+    explore.add_argument("--allow-stale", action="store_true")
+    explore.add_argument("--no-color", action="store_true", help="Disable terminal color")
     cache_command = commands.add_parser("cache", help="Manage only this workspace's cached facts")
     clear = cache_command.add_subparsers(dest="cache_command", required=True).add_parser(
         "clear", help="Clear rows in this workspace's owned cache; preserve source files"
@@ -130,6 +141,49 @@ def parser() -> argparse.ArgumentParser:
             help="Cache base directory; workspace namespace is added automatically",
         )
     return result
+
+
+def explore_command(args: argparse.Namespace) -> int:
+    if (args.report is not None or args.analysis is not None) and (
+        args.base is not None or args.head is not None
+    ):
+        raise RippleError(
+            "RPL-EXPLORE-001", "Choose saved report data or revision refs, not both.", 2
+        )
+    if not sys.stdin.isatty() or not sys.stdout.isatty() or os.environ.get("TERM") == "dumb":
+        raise RippleError(
+            "RPL-EXPLORE-002",
+            "Explore requires an interactive terminal. Use analyze --format json "
+            "or explain --report FILE for headless inspection.",
+            2,
+        )
+    try:
+        from ripple.explorer import ExplorerApp
+    except ImportError as exc:
+        raise RippleError(
+            "RPL-EXPLORE-004", 'Explorer dependencies are missing. Install "ripple-impact[tui]".', 2
+        ) from exc
+    from ripple.explorer_data import load_session
+
+    app = ExplorerApp(
+        lambda refresh: load_session(
+            args.repo,
+            args.report,
+            args.analysis,
+            args.base,
+            args.head,
+            args.cache_dir,
+            args.allow_stale,
+            refresh,
+        ),
+        monochrome=args.no_color or "NO_COLOR" in os.environ,
+    )
+    try:
+        return app.run() or 0
+    except Exception as exc:
+        raise RippleError(
+            "RPL-EXPLORE-005", f"Terminal explorer failed ({type(exc).__name__}).", 1
+        ) from exc
 
 
 def explain_command(args: argparse.Namespace) -> int:
@@ -225,6 +279,8 @@ def cache_messages(stats: IndexStats, verbose: bool) -> None:
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     try:
+        if args.command == "explore":
+            return explore_command(args)
         if args.command == "explain":
             return explain_command(args)
         if args.command in {"status", "doctor", "cache"}:

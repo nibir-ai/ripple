@@ -4,9 +4,9 @@ See potential ripple effects of Python code changes, with source evidence, from 
 Ripple compares immutable Git trees, finds changed functions and follows statically
 supported caller relationships. Analysis runs locally without executing target code.
 
-**Status: Development preview (`0.1.0.dev5`).** Revision matching, SQLite
-snapshots and content-addressed syntax reuse are implemented. The TUI and full v0.1
-release are not yet available.
+**Status: Development preview (`0.1.0.dev6`).** Revision matching, SQLite
+snapshots, content-addressed syntax reuse and a keyboard terminal explorer are implemented.
+The full v0.1 release is not yet available.
 
 ```powershell
 python -m venv .venv
@@ -25,6 +25,7 @@ python -m venv .venv
 .venv\Scripts\python examples/demo.py --destination .demo-tests --tests
 .venv\Scripts\ripple analyze --repo .demo-tests --strict
 .venv\Scripts\ripple explain tests.test_service.test_endpoint --repo .demo-tests
+.venv\Scripts\ripple explore --repo .demo-tests
 ```
 
 On Linux/macOS use `.venv/bin/python` and `.venv/bin/ripple`.
@@ -33,7 +34,14 @@ For your own Python Git repository:
 ```console
 ripple index --repo /path/to/project --ref HEAD
 ripple analyze --repo /path/to/project --base main --head HEAD
+ripple explore --repo /path/to/project
 ```
+
+The headless CLI needs Python and Git. Install `pip install "ripple-impact[tui]"`
+for the optional Textual explorer (`.[dev]` above includes it). Explore opens a current
+saved report or analyzes HEAD~1..HEAD in a background worker. Use Tab to move between
+changes, potential effects and source evidence; `p` opens call paths, `t` related tests,
+`/` search and `?` help. Source previews come from the reported Git trees.
 
 The generated demo changes `service.calculate_total` and reports `api.checkout` as
 a direct potential caller and `api.endpoint` as a transitive potential caller.
@@ -58,6 +66,7 @@ Method paths explicitly qualify runtime dispatch. No callers found does not prov
 `--strict` exits 4 when analysis is partial. Configuration is never read from dirty source files.
 
 - [CLI contracts](docs/cli.md)
+- [Terminal explorer](docs/explorer.md)
 - [Evidence reports and related tests](docs/reports.md)
 - [Analyzer semantics and limitations](docs/analyzer-semantics.md)
 - [Architecture](docs/architecture.md)

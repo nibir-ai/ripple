@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ripple-impact"
-version = "0.1.0.dev5"
+version = "0.1.0.dev6"
 description = "Offline, evidence-based Python change-impact analysis"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -22,7 +22,8 @@ classifiers = [
 ripple = "ripple.cli:main"
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<10", "ruff>=0.11,<1", "mypy>=1.15,<2", "build>=1.2,<2", "jsonschema>=4.23,<5"]
+tui = ["textual>=8.2.8,<9"]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1", "mypy>=1.15,<2", "build>=1.2,<2", "jsonschema>=4.23,<5", "textual>=8.2.8,<9"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
