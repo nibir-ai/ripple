@@ -57,3 +57,7 @@ Both snapshots contribute diagnostics/counts, even for identical trees.
 No confidence percentages or test coverage claims are produced. Comparison relocation
 candidates are separate from call-graph resolution and never create impact edges.
 No target code runs and no analyzed files change.
+
+See `reports.md` for the versioned traversal policy, edge/time/path caps, related-test
+evidence classes and saved-report inspection. Test imports remain separate from caller
+propagation and do not establish runtime coverage.

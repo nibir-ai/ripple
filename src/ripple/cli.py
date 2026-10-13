@@ -11,10 +11,12 @@ from ripple.analysis import analyze
 from ripple.cache import Cache, CacheUnavailable, default_cache_dir, workspace_id
 from ripple.config import load_config
 from ripple.errors import RippleError
+from ripple.explain import explanation, select_impact
 from ripple.git_source import GitSource, SourceFile
 from ripple.indexing import IndexStats, index_snapshot, key_for, open_cache
 from ripple.models import Policy
 from ripple.output import render_text, safe_text
+from ripple.reports import read_report
 
 
 def positive(value: str) -> int:
@@ -31,6 +33,13 @@ def rename_threshold(value: str) -> int:
     number = positive(value)
     if not 50 <= number <= 100:
         raise argparse.ArgumentTypeError("must be 50 through 100")
+    return number
+
+
+def query_timeout(value: str) -> int:
+    number = positive(value)
+    if number > 3600000:
+        raise argparse.ArgumentTypeError("must be 1 through 3600000 milliseconds")
     return number
 
 
@@ -55,6 +64,12 @@ def parser() -> argparse.ArgumentParser:
     comparison.add_argument("--head", default="HEAD", help="Head ref (default: HEAD)")
     comparison.add_argument("--max-depth", type=positive, default=8)
     comparison.add_argument("--max-nodes", type=positive, default=5000)
+    comparison.add_argument("--max-edges", type=positive, default=100000)
+    comparison.add_argument("--max-paths-per-target", type=positive, default=16)
+    comparison.add_argument("--query-timeout-ms", type=query_timeout, default=10000)
+    comparison.add_argument(
+        "--no-candidates", action="store_true", help="Use resolved call edges only (the default)"
+    )
     comparison.add_argument(
         "--rename-threshold",
         type=rename_threshold,
@@ -63,6 +78,19 @@ def parser() -> argparse.ArgumentParser:
     )
     status = commands.add_parser("status", help="Inspect this workspace's cache and staleness")
     doctor = commands.add_parser("doctor", help="Check Git, configuration and cache integrity")
+    explain = commands.add_parser("explain", help="Inspect evidence for one impacted symbol")
+    explain.add_argument("name", nargs="?")
+    selector = explain.add_mutually_exclusive_group()
+    selector.add_argument("--symbol-id")
+    selector.add_argument("--path", help="Repository-relative path:line")
+    saved = explain.add_mutually_exclusive_group()
+    saved.add_argument("--report", type=Path, help="Read a saved JSON report")
+    saved.add_argument("--analysis", help="Exact saved analysis ID")
+    explain.add_argument(
+        "--allow-stale",
+        action="store_true",
+        help="Inspect a historical cached report with its original provenance",
+    )
     cache_command = commands.add_parser("cache", help="Manage only this workspace's cached facts")
     clear = cache_command.add_subparsers(dest="cache_command", required=True).add_parser(
         "clear", help="Clear rows in this workspace's owned cache; preserve source files"
@@ -92,16 +120,51 @@ def parser() -> argparse.ArgumentParser:
             help="Repository-relative import "
             "root; repeat for multiple roots. Overrides snapshot TOML.",
         )
-    for command in (status, doctor, clear):
+    for command in (status, doctor, clear, explain):
         command.add_argument("--repo", type=Path, default=Path.cwd())
         command.add_argument("--format", choices=("text", "json"), default="text")
-    for command in (index, comparison, status, doctor, clear):
+    for command in (index, comparison, status, doctor, clear, explain):
         command.add_argument(
             "--cache-dir",
             type=Path,
             help="Cache base directory; workspace namespace is added automatically",
         )
     return result
+
+
+def explain_command(args: argparse.Namespace) -> int:
+    if args.name is not None and (args.symbol_id is not None or args.path is not None):
+        raise RippleError("RPL-EXPLAIN-001", "Use exactly one symbol selector.", 2)
+    try:
+        if args.report is not None:
+            report = read_report(args.report)
+        else:
+            source = GitSource(args.repo)
+            report = Cache(source.root, args.cache_dir, repair=False).load_report(args.analysis)
+            tree = source.resolve("HEAD")
+            entries, excluded = source.inventory(tree)
+            config = load_config(
+                source, tree, [SourceFile(e.path, b"") for e in entries], excluded=excluded
+            )
+            stale = (
+                tree != report.comparison.head_tree
+                or config.fingerprint != report.tool.get("head_config")
+                or report.tool.get("version") != __version__
+            )
+            if stale and not args.allow_stale:
+                raise RippleError(
+                    "RPL-EXPLAIN-004",
+                    "Saved analysis is stale; rerun analyze or use --allow-stale.",
+                    2,
+                )
+    except (CacheUnavailable, ValueError, TypeError, KeyError, RecursionError) as exc:
+        raise RippleError(
+            "RPL-REPORT-001", "Invalid or unavailable report; rerun analyze.", 2
+        ) from exc
+    impact = select_impact(report, args.name, args.symbol_id, args.path)
+    selected = explanation(report, impact)
+    sys.stdout.write(selected.to_json() if args.format == "json" else render_text(selected))
+    return 0
 
 
 def maintenance(args: argparse.Namespace) -> int:
@@ -162,6 +225,8 @@ def cache_messages(stats: IndexStats, verbose: bool) -> None:
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     try:
+        if args.command == "explain":
+            return explain_command(args)
         if args.command in {"status", "doctor", "cache"}:
             return maintenance(args)
         stats = IndexStats()
@@ -170,7 +235,13 @@ def main(argv: list[str] | None = None) -> int:
                 args.repo,
                 args.base,
                 args.head,
-                Policy(max_depth=args.max_depth, max_nodes=args.max_nodes),
+                Policy(
+                    max_depth=args.max_depth,
+                    max_nodes=args.max_nodes,
+                    max_edges=args.max_edges,
+                    max_paths_per_target=args.max_paths_per_target,
+                    query_timeout_ms=args.query_timeout_ms,
+                ),
                 tuple(args.source_root) if args.source_root is not None else None,
                 args.rename_threshold,
                 args.cache_dir,

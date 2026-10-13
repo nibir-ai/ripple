@@ -28,6 +28,9 @@ jobs:
       - run: ripple status --repo .demo-package --format json
       - run: python examples/demo.py --destination .demo-rename --rename
       - run: ripple analyze --repo .demo-rename
+      - run: python examples/demo.py --destination .demo-tests --tests
+      - run: ripple analyze --repo .demo-tests --strict
+      - run: ripple explain tests.test_service.test_endpoint --repo .demo-tests --format json
       - name: Clean wheel smoke test
         shell: bash
         run: |
@@ -39,3 +42,5 @@ jobs:
           "$BIN/ripple" analyze --repo .demo-package --strict
           "$BIN/ripple" doctor --repo .demo-package --format json
           "$BIN/ripple" analyze --repo .demo-rename
+          "$BIN/ripple" analyze --repo .demo-tests --strict
+          "$BIN/ripple" explain tests.test_service.test_endpoint --repo .demo-tests --format json

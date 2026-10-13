@@ -1,0 +1,66 @@
+RIPPLE - potential change impact
+Trees: d5534913355bb73557ebfdae96da10e39c9847c1 -> 6f4de969510fff6838bf5501659291d1d07ae6eb
+Mode: Python static analysis; no target code execution
+Summary: 1 changed symbols; 2 direct callers; 2 transitive callers; 2 related test associations
+Source roots: before .; after .
+
+CHANGES
+  body_modified: service.calculate_total (service.py:1)
+
+POTENTIAL CALLER IMPACT
+  api.checkout: direct_caller, depth 1, both [resolved]
+    Change ecde9ad49cdaa32f17ea47b0 [after]
+      api.checkout --CALLS--> service.calculate_total at api.py:4:11 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+    Change ecde9ad49cdaa32f17ea47b0 [before]
+      api.checkout --CALLS--> service.calculate_total at api.py:4:11 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+  tests.test_service.test_total: direct_caller, depth 1, both [resolved]
+    Change ecde9ad49cdaa32f17ea47b0 [after]
+      tests.test_service.test_total --CALLS--> service.calculate_total at tests/test_service.py:4:25 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+    Change ecde9ad49cdaa32f17ea47b0 [before]
+      tests.test_service.test_total --CALLS--> service.calculate_total at tests/test_service.py:4:25 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+  api.endpoint: transitive_caller, depth 2, both [resolved]
+    Change ecde9ad49cdaa32f17ea47b0 [after]
+      api.endpoint --CALLS--> api.checkout at api.py:7:11 (python.same-module-function-v1)
+        Unique lexical definition; runtime mutation remains possible.
+      api.checkout --CALLS--> service.calculate_total at api.py:4:11 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+    Change ecde9ad49cdaa32f17ea47b0 [before]
+      api.endpoint --CALLS--> api.checkout at api.py:7:11 (python.same-module-function-v1)
+        Unique lexical definition; runtime mutation remains possible.
+      api.checkout --CALLS--> service.calculate_total at api.py:4:11 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+  tests.test_service.test_endpoint: transitive_caller, depth 3, both [resolved]
+    Change ecde9ad49cdaa32f17ea47b0 [after]
+      tests.test_service.test_endpoint --CALLS--> api.endpoint at tests/test_service.py:6:28 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+      api.endpoint --CALLS--> api.checkout at api.py:7:11 (python.same-module-function-v1)
+        Unique lexical definition; runtime mutation remains possible.
+      api.checkout --CALLS--> service.calculate_total at api.py:4:11 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+    Change ecde9ad49cdaa32f17ea47b0 [before]
+      tests.test_service.test_endpoint --CALLS--> api.endpoint at tests/test_service.py:6:28 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+      api.endpoint --CALLS--> api.checkout at api.py:7:11 (python.same-module-function-v1)
+        Unique lexical definition; runtime mutation remains possible.
+      api.checkout --CALLS--> service.calculate_total at api.py:4:11 (python.imported-function-call-v1)
+        Unique lexical definition; runtime mutation remains possible.
+
+RELATED TESTS (static associations, not runtime coverage)
+  tests.test_service.test_total: direct_static_call, both
+  tests.test_service.test_endpoint: transitive_static_call, both
+  tests.test_import: import_reference_only, both
+    [before] Import only at tests/test_import.py:1 (python.direct-from-import-v1); does not identify an individual test or prove coverage.
+    [after] Import only at tests/test_import.py:1 (python.direct-from-import-v1); does not identify an individual test or prove coverage.
+  tests.test_service: import_reference_only, both
+    [before] Import only at tests/test_service.py:1 (python.direct-from-import-v1); does not identify an individual test or prove coverage.
+    [after] Import only at tests/test_service.py:1 (python.direct-from-import-v1); does not identify an individual test or prove coverage.
+
+COMPLETENESS
+  complete_within_static_policy; 8 parsed files across both sides; 0 skipped; 0 unresolved references.
+  Limits: depth 8, nodes 5000; truncated: false.
+  Work limit: 100000 edges; 16 paths/target; query timeout 10000 ms.
+  Static evidence does not guarantee runtime behavior or safety.

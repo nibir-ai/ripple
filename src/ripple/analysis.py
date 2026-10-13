@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sys
+import time
 from collections import defaultdict, deque
 from dataclasses import asdict
 from pathlib import Path
@@ -19,6 +20,7 @@ from ripple.models import (
     Edge,
     EvidencePath,
     Impact,
+    ImpactGroup,
     Policy,
     Report,
     Snapshot,
@@ -27,6 +29,8 @@ from ripple.models import (
     SymbolMatch,
     stable_id,
 )
+from ripple.reports import validate_report
+from ripple.test_selection import related_tests_for
 
 
 def changes_between(before: Snapshot, after: Snapshot) -> tuple[Change, ...]:
@@ -51,13 +55,32 @@ def impacts_for(
         canonical[relation.after_symbol_id] = key
     locations: dict[str, dict[str, Symbol]] = defaultdict(dict)
     additional: set[str] = set()
+    deadline = time.monotonic() + policy.query_timeout_ms / 1000
+    work = 0
+
+    def exhausted(*, edge: bool = False) -> bool:
+        nonlocal work
+        if time.monotonic() >= deadline:
+            reasons.add("query_timeout")
+        if edge:
+            work += 1
+            if work > policy.max_edges:
+                reasons.add("max_edges")
+        return bool(reasons & {"query_timeout", "max_edges"})
+
     for snapshot, side in [(before, "before"), (after, "after")]:
+        if exhausted():
+            break
         symbols = {s.id: s for s in snapshot.symbols}
         incoming: dict[str, list[Edge]] = defaultdict(list)
         for edge in snapshot.edges:
+            if exhausted(edge=True):
+                break
             if edge.edge_type == "CALLS":
                 incoming[edge.target_id].append(edge)
         for neighbors in incoming.values():
+            if exhausted():
+                break
             neighbors.sort(
                 key=lambda e: (
                     symbols[e.source_id].logical_id,
@@ -68,6 +91,8 @@ def impacts_for(
                 )
             )
         for change in changes:
+            if exhausted():
+                break
             seed = change.before_symbol_id if side == "before" else change.after_symbol_id
             if seed is None or seed not in symbols:
                 continue
@@ -77,6 +102,8 @@ def impacts_for(
             queue: deque[tuple[str, tuple[Step, ...]]] = deque([(seed, ())])
             visited = {seed}
             while queue:
+                if exhausted():
+                    break
                 target_id, path = queue.popleft()
                 neighbors = incoming[target_id]
                 if len(path) >= policy.max_depth:
@@ -84,6 +111,8 @@ def impacts_for(
                         reasons.add("max_depth")
                     continue
                 for edge in neighbors:
+                    if exhausted(edge=True):
+                        break
                     caller = symbols[edge.source_id]
                     if caller.id in visited:
                         if caller.id != seed:
@@ -110,7 +139,11 @@ def impacts_for(
                     if key not in collected:
                         collected[key] = (caller, [])
                     selected, paths = collected[key]
-                    paths.append(evidence)
+                    if len(paths) < policy.max_paths_per_target:
+                        paths.append(evidence)
+                    else:
+                        reasons.add("max_paths_per_target")
+                        additional.add(key)
                     locations[key][side] = caller
                     if side == "after":
                         collected[key] = (caller, paths)
@@ -179,6 +212,12 @@ def analyze(
     result = compare(before, after, file_changes)
     changes = result.changes
     impacts, limits = impacts_for(changes, before, after, policy, result.matches)
+    related_tests = related_tests_for(changes, impacts, before, after, result.matches)
+    groups = tuple(
+        ImpactGroup(category, count, 20)
+        for category in ("direct_caller", "transitive_caller")
+        if (count := sum(i.category == category for i in impacts)) > 20
+    )
     diagnostics: list[dict[str, str | int]] = []
     for snapshot, side in [(before, "before"), (after, "after")]:
         for diagnostic in snapshot.diagnostics:
@@ -234,6 +273,12 @@ def analyze(
             "impacted_transitive_count": sum(i.depth > 1 for i in impacts),
             "candidate_impact_count": 0,
             "relocation_candidate_count": len(result.candidates),
+            "related_test_count": sum(
+                t.evidence_class != "import_reference_only" for t in related_tests
+            ),
+            "related_test_import_module_count": sum(
+                t.evidence_class == "import_reference_only" for t in related_tests
+            ),
         },
         changes,
         impacts,
@@ -242,7 +287,10 @@ def analyze(
         file_changes,
         result.matches,
         result.candidates,
+        related_tests,
+        groups,
     )
+    validate_report(report)
     if cache is not None:
         try:
             cache.save_report(

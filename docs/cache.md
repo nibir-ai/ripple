@@ -5,6 +5,7 @@ on Linux/macOS it is `$XDG_CACHE_HOME/ripple`, falling back to `~/.cache/ripple`
 A hash of the normalized repository root names the workspace subdirectory.
 `ripple status --repo PATH` shows the exact database path, size, snapshot/syntax counts,
 roots, parser/analyzer versions, last index times and saved analysis metadata.
+Saved metadata includes an `analysis_id` for exact `explain --analysis ID` selection.
 
 ```powershell
 ripple index --repo PATH

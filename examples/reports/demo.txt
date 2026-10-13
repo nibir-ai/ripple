@@ -1,6 +1,7 @@
 RIPPLE - potential change impact
 Trees: c37348802abb87566f8f6beebef029012c51cdd2 -> 9c8669c58ee5163adf6bfbe6d767cd303f0e0338
 Mode: Python static analysis; no target code execution
+Summary: 1 changed symbols; 1 direct callers; 1 transitive callers; 0 related test associations
 Source roots: before .; after .
 
 CHANGES
@@ -29,4 +30,5 @@ POTENTIAL CALLER IMPACT
 COMPLETENESS
   complete_within_static_policy; 4 parsed files across both sides; 0 skipped; 0 unresolved references.
   Limits: depth 8, nodes 5000; truncated: false.
+  Work limit: 100000 edges; 16 paths/target; query timeout 10000 ms.
   Static evidence does not guarantee runtime behavior or safety.

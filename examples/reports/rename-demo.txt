@@ -1,6 +1,7 @@
 RIPPLE - potential change impact
 Trees: 084893b0f0cfcbb5015fff5ac9ffe459fc4e3bfe -> cd130ee69c8261abc6baa4391ffd5abed6e60439
 Mode: Python static analysis; no target code execution
+Summary: 2 changed symbols; 1 direct callers; 1 transitive callers; 0 related test associations
 Source roots: before .; after .
 
 CHANGES
@@ -24,6 +25,8 @@ POTENTIAL CALLER IMPACT
 COMPLETENESS
   partial; 4 parsed files across both sides; 0 skipped; 2 unresolved references.
   Limits: depth 8, nodes 5000; truncated: false.
+  Work limit: 100000 edges; 16 paths/target; query timeout 10000 ms.
+  Reasons: unresolved_call, unresolved_import
   [after] unresolved_import: api.py:1 - Module missing from configured source scope; environment is not inferred.
   [after] unresolved_call: api.py:4 - Module missing from configured source scope; environment is not inferred.
   Static evidence does not guarantee runtime behavior or safety.

@@ -15,8 +15,9 @@ from contextlib import contextmanager
 from dataclasses import asdict
 from pathlib import Path
 
-from ripple.cache_codec import MAX_PAYLOAD, ast_data, checksum, read_ast, read_snapshot, typed_value
+from ripple.cache_codec import MAX_PAYLOAD, ast_data, checksum, read_ast, read_snapshot
 from ripple.models import Report, Snapshot, stable_id
+from ripple.reports import decode_report
 
 SCHEMA_VERSION = 3
 APPLICATION_ID = 0x52504C45
@@ -399,7 +400,7 @@ class Cache:
             ).fetchall()
             syntax_count = connection.execute("SELECT COUNT(*) FROM syntax").fetchone()[0]
             last = connection.execute(
-                "SELECT head_key,created_at,payload FROM analysis_runs "
+                "SELECT head_key,created_at,payload,key FROM analysis_runs "
                 "ORDER BY created_at DESC LIMIT 1"
             ).fetchone()
         last_report = json.loads(last[2]) if last else None
@@ -413,6 +414,7 @@ class Cache:
                 "head_key": last[0],
                 "created_at": last[1],
                 "comparison": last_report["comparison"],
+                "analysis_id": last[3],
                 "policy": last_report["policy"],
                 "completeness": last_report["completeness"]["status"],
             }
@@ -469,7 +471,7 @@ class Cache:
             try:
                 if checksum(payload) != digest:
                     raise ValueError("Report checksum mismatch")
-                typed_value(json.loads(payload), Report)
+                decode_report(payload)
             except (ValueError, TypeError, KeyError, RecursionError):
                 invalid_reports += 1
         return {
@@ -503,6 +505,23 @@ class Cache:
                 "INSERT OR REPLACE INTO analysis_runs VALUES(?,?,?,?,?,?,?)",
                 (key, base_key, head_key, policy, time.time(), payload, checksum(payload)),
             )
+
+    def load_report(self, analysis_id: str | None = None) -> Report:
+        with self.connection(readonly=True) as connection:
+            if analysis_id is None:
+                row = connection.execute(
+                    "SELECT payload,checksum FROM analysis_runs "
+                    "ORDER BY created_at DESC,key LIMIT 1"
+                ).fetchone()
+            else:
+                row = connection.execute(
+                    "SELECT payload,checksum FROM analysis_runs WHERE key=?", (analysis_id,)
+                ).fetchone()
+        if row is None:
+            raise CacheUnavailable("No saved analysis; run ripple analyze or use --report.")
+        if checksum(row[0]) != row[1]:
+            raise CacheUnavailable("Saved report checksum mismatch; rerun analysis.")
+        return decode_report(row[0])
 
     def clear(self) -> None:
         # Clear only rows in this owned workspace database, never source/cache directories.

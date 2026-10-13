@@ -14,8 +14,9 @@ resolution still do not execute target code.
 Input defaults: 2 MiB/file, 32 MiB/snapshot, 2,000 Python entries, 100,000 AST nodes/file,
 8 MiB Git tree output, 64 KiB Git stderr, 20 seconds per Git process. Impact defaults:
 depth 8 and 5,000 unique results, configurable via CLI. Parsing is not process-isolated;
-this preview is not a hardened service for arbitrary hostile repositories. A query wall
-time/edge budget and process isolation belong to later hardening.
+this preview is not a hardened service for arbitrary hostile repositories. Caller queries
+have edge-work, path and monotonic time budgets. These are cooperative limits, not
+process isolation or a deadline for the entire CLI operation.
 
 Raw tree diffs disable external diff and text converters. Full blob IDs and
 NUL-separated paths are parsed as data. Rename/copy detection has a 2,000-file

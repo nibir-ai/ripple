@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 
-@pytest.mark.parametrize("mode", ["basic", "package", "rename"])
+@pytest.mark.parametrize("mode", ["basic", "package", "rename", "tests"])
 def test_generated_demo_matches_reviewable_report(tmp_path, mode):
     project = Path(__file__).resolve().parents[1]
     destination = tmp_path / "demo"
@@ -62,7 +62,12 @@ def test_generated_demo_matches_reviewable_report(tmp_path, mode):
     # Running the helper a second time must refuse to overwrite existing content.
     source = (
         destination
-        / {"basic": "service.py", "package": "src/shop/pricing.py", "rename": "totals.py"}[mode]
+        / {
+            "basic": "service.py",
+            "package": "src/shop/pricing.py",
+            "rename": "totals.py",
+            "tests": "service.py",
+        }[mode]
     )
     before = source.read_bytes()
     assert subprocess.run(command, capture_output=True, timeout=30).returncode != 0

@@ -103,6 +103,19 @@
         },
         "include_candidates": {
           "type": "boolean"
+        },
+        "max_edges": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_paths_per_target": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "query_timeout_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600000
         }
       }
     },
@@ -235,6 +248,18 @@
       "type": "array",
       "items": {
         "$ref": "#/$defs/match_candidate"
+      }
+    },
+    "related_tests": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/related_test"
+      }
+    },
+    "impact_groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/impact_group"
       }
     }
   },
@@ -638,6 +663,138 @@
         },
         "explanation": {
           "type": "string"
+        }
+      }
+    },
+    "test_import": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot",
+        "tree",
+        "site",
+        "resolver_rule",
+        "origin_change_ids"
+      ],
+      "properties": {
+        "snapshot": {
+          "enum": [
+            "before",
+            "after"
+          ]
+        },
+        "tree": {
+          "$ref": "#/$defs/oid"
+        },
+        "site": {
+          "$ref": "#/$defs/location"
+        },
+        "resolver_rule": {
+          "type": "string"
+        },
+        "origin_change_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "related_test": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "symbol_id",
+        "display_name",
+        "evidence_class",
+        "provenance",
+        "origin_change_ids",
+        "evidence_paths",
+        "import_evidence",
+        "before",
+        "after"
+      ],
+      "properties": {
+        "symbol_id": {
+          "type": "string"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "evidence_class": {
+          "enum": [
+            "direct_static_call",
+            "transitive_static_call",
+            "import_reference_only"
+          ]
+        },
+        "provenance": {
+          "enum": [
+            "before_only",
+            "after_only",
+            "both"
+          ]
+        },
+        "origin_change_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence_paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "import_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/test_import"
+          }
+        },
+        "before": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/location"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/location"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "impact_group": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "category",
+        "count",
+        "displayed_count"
+      ],
+      "properties": {
+        "category": {
+          "enum": [
+            "direct_caller",
+            "transitive_caller"
+          ]
+        },
+        "count": {
+          "$ref": "#/$defs/count"
+        },
+        "displayed_count": {
+          "$ref": "#/$defs/count"
         }
       }
     }

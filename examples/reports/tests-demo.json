@@ -1,0 +1,833 @@
+{
+  "changes": [
+    {
+      "after": {
+        "column": 0,
+        "end_column": 18,
+        "end_line": 2,
+        "line": 1,
+        "path": "service.py"
+      },
+      "after_display_name": "service.calculate_total",
+      "after_symbol_id": "c3cf58e54b5614ddd5c1a6d7",
+      "before": {
+        "column": 0,
+        "end_column": 18,
+        "end_line": 2,
+        "line": 1,
+        "path": "service.py"
+      },
+      "before_display_name": "service.calculate_total",
+      "before_symbol_id": "cf5b30b6808a14d8776fa614",
+      "change_id": "ecde9ad49cdaa32f17ea47b0",
+      "display_name": "service.calculate_total",
+      "kind": "body_modified",
+      "match_rule": "unique_path_qualname_kind-v1"
+    }
+  ],
+  "comparison": {
+    "base_ref": "HEAD~1",
+    "base_source_roots": [
+      "."
+    ],
+    "base_tree": "d5534913355bb73557ebfdae96da10e39c9847c1",
+    "head_ref": "HEAD",
+    "head_source_roots": [
+      "."
+    ],
+    "head_tree": "6f4de969510fff6838bf5501659291d1d07ae6eb"
+  },
+  "completeness": {
+    "candidate_references": 0,
+    "notes": [
+      "Counts cover both snapshot sides, including identical trees.",
+      "Comparison uses normalized definitions and retains both revision graphs.",
+      "Git rename similarity is heuristic; structural relocation candidates do not merge identities.",
+      "Static evidence does not guarantee runtime behavior or safety."
+    ],
+    "parsed_files": 8,
+    "reasons": [],
+    "skipped_files": 0,
+    "status": "complete_within_static_policy",
+    "truncated": false,
+    "unresolved_references": 0
+  },
+  "diagnostics": [],
+  "file_changes": [
+    {
+      "after_blob": "6758c0cf143ec046449cd2a99b42e1fddd5eaf84",
+      "after_path": "service.py",
+      "before_blob": "22b850271d911e458e1bde3f7f1dfa5b302c871a",
+      "before_path": "service.py",
+      "similarity": null,
+      "status": "modified"
+    }
+  ],
+  "impact_groups": [],
+  "impacts": [
+    {
+      "additional_paths_possible": false,
+      "after": {
+        "column": 0,
+        "end_column": 19,
+        "end_line": 4,
+        "line": 3,
+        "path": "api.py"
+      },
+      "after_display_name": "api.checkout",
+      "before": {
+        "column": 0,
+        "end_column": 19,
+        "end_line": 4,
+        "line": 3,
+        "path": "api.py"
+      },
+      "before_display_name": "api.checkout",
+      "category": "direct_caller",
+      "depth": 1,
+      "display_name": "api.checkout",
+      "evidence_paths": [
+        {
+          "origin_change_id": "ecde9ad49cdaa32f17ea47b0",
+          "snapshot": "after",
+          "steps": [
+            {
+              "callee": "service.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 19,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "6f4de969510fff6838bf5501659291d1d07ae6eb"
+        },
+        {
+          "origin_change_id": "ecde9ad49cdaa32f17ea47b0",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "service.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 19,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "d5534913355bb73557ebfdae96da10e39c9847c1"
+        }
+      ],
+      "origin_change_ids": [
+        "ecde9ad49cdaa32f17ea47b0"
+      ],
+      "provenance": "both",
+      "resolution_state": "resolved",
+      "symbol_id": "1257863d87110eba8bf23406"
+    },
+    {
+      "additional_paths_possible": false,
+      "after": {
+        "column": 0,
+        "end_column": 44,
+        "end_line": 4,
+        "line": 4,
+        "path": "tests/test_service.py"
+      },
+      "after_display_name": "tests.test_service.test_total",
+      "before": {
+        "column": 0,
+        "end_column": 44,
+        "end_line": 4,
+        "line": 4,
+        "path": "tests/test_service.py"
+      },
+      "before_display_name": "tests.test_service.test_total",
+      "category": "direct_caller",
+      "depth": 1,
+      "display_name": "tests.test_service.test_total",
+      "evidence_paths": [
+        {
+          "origin_change_id": "ecde9ad49cdaa32f17ea47b0",
+          "snapshot": "after",
+          "steps": [
+            {
+              "callee": "service.calculate_total",
+              "caller": "tests.test_service.test_total",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 25,
+                "end_column": 44,
+                "end_line": 4,
+                "line": 4,
+                "path": "tests/test_service.py"
+              }
+            }
+          ],
+          "tree": "6f4de969510fff6838bf5501659291d1d07ae6eb"
+        },
+        {
+          "origin_change_id": "ecde9ad49cdaa32f17ea47b0",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "service.calculate_total",
+              "caller": "tests.test_service.test_total",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 25,
+                "end_column": 44,
+                "end_line": 4,
+                "line": 4,
+                "path": "tests/test_service.py"
+              }
+            }
+          ],
+          "tree": "d5534913355bb73557ebfdae96da10e39c9847c1"
+        }
+      ],
+      "origin_change_ids": [
+        "ecde9ad49cdaa32f17ea47b0"
+      ],
+      "provenance": "both",
+      "resolution_state": "resolved",
+      "symbol_id": "eb6e8c6eb497800d6bfa687f"
+    },
+    {
+      "additional_paths_possible": false,
+      "after": {
+        "column": 0,
+        "end_column": 22,
+        "end_line": 7,
+        "line": 6,
+        "path": "api.py"
+      },
+      "after_display_name": "api.endpoint",
+      "before": {
+        "column": 0,
+        "end_column": 22,
+        "end_line": 7,
+        "line": 6,
+        "path": "api.py"
+      },
+      "before_display_name": "api.endpoint",
+      "category": "transitive_caller",
+      "depth": 2,
+      "display_name": "api.endpoint",
+      "evidence_paths": [
+        {
+          "origin_change_id": "ecde9ad49cdaa32f17ea47b0",
+          "snapshot": "after",
+          "steps": [
+            {
+              "callee": "api.checkout",
+              "caller": "api.endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.same-module-function-v1",
+              "site": {
+                "column": 11,
+                "end_column": 22,
+                "end_line": 7,
+                "line": 7,
+                "path": "api.py"
+              }
+            },
+            {
+              "callee": "service.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 19,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "6f4de969510fff6838bf5501659291d1d07ae6eb"
+        },
+        {
+          "origin_change_id": "ecde9ad49cdaa32f17ea47b0",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "api.checkout",
+              "caller": "api.endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.same-module-function-v1",
+              "site": {
+                "column": 11,
+                "end_column": 22,
+                "end_line": 7,
+                "line": 7,
+                "path": "api.py"
+              }
+            },
+            {
+              "callee": "service.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 19,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "d5534913355bb73557ebfdae96da10e39c9847c1"
+        }
+      ],
+      "origin_change_ids": [
+        "ecde9ad49cdaa32f17ea47b0"
+      ],
+      "provenance": "both",
+      "resolution_state": "resolved",
+      "symbol_id": "954bba1e88c11404d2b5bc77"
+    },
+    {
+      "additional_paths_possible": false,
+      "after": {
+        "column": 0,
+        "end_column": 40,
+        "end_line": 6,
+        "line": 6,
+        "path": "tests/test_service.py"
+      },
+      "after_display_name": "tests.test_service.test_endpoint",
+      "before": {
+        "column": 0,
+        "end_column": 40,
+        "end_line": 6,
+        "line": 6,
+        "path": "tests/test_service.py"
+      },
+      "before_display_name": "tests.test_service.test_endpoint",
+      "category": "transitive_caller",
+      "depth": 3,
+      "display_name": "tests.test_service.test_endpoint",
+      "evidence_paths": [
+        {
+          "origin_change_id": "ecde9ad49cdaa32f17ea47b0",
+          "snapshot": "after",
+          "steps": [
+            {
+              "callee": "api.endpoint",
+              "caller": "tests.test_service.test_endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 28,
+                "end_column": 40,
+                "end_line": 6,
+                "line": 6,
+                "path": "tests/test_service.py"
+              }
+            },
+            {
+              "callee": "api.checkout",
+              "caller": "api.endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.same-module-function-v1",
+              "site": {
+                "column": 11,
+                "end_column": 22,
+                "end_line": 7,
+                "line": 7,
+                "path": "api.py"
+              }
+            },
+            {
+              "callee": "service.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 19,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "6f4de969510fff6838bf5501659291d1d07ae6eb"
+        },
+        {
+          "origin_change_id": "ecde9ad49cdaa32f17ea47b0",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "api.endpoint",
+              "caller": "tests.test_service.test_endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 28,
+                "end_column": 40,
+                "end_line": 6,
+                "line": 6,
+                "path": "tests/test_service.py"
+              }
+            },
+            {
+              "callee": "api.checkout",
+              "caller": "api.endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.same-module-function-v1",
+              "site": {
+                "column": 11,
+                "end_column": 22,
+                "end_line": 7,
+                "line": 7,
+                "path": "api.py"
+              }
+            },
+            {
+              "callee": "service.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 19,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "d5534913355bb73557ebfdae96da10e39c9847c1"
+        }
+      ],
+      "origin_change_ids": [
+        "ecde9ad49cdaa32f17ea47b0"
+      ],
+      "provenance": "both",
+      "resolution_state": "resolved",
+      "symbol_id": "e95a9ff3d350df32aacf38ed"
+    }
+  ],
+  "match_candidates": [],
+  "policy": {
+    "id": "python-callers-v1",
+    "include_candidates": false,
+    "max_depth": 8,
+    "max_edges": 100000,
+    "max_nodes": 5000,
+    "max_paths_per_target": 16,
+    "query_timeout_ms": 10000
+  },
+  "related_tests": [
+    {
+      "after": {
+        "column": 0,
+        "end_column": 44,
+        "end_line": 4,
+        "line": 4,
+        "path": "tests/test_service.py"
+      },
+      "before": {
+        "column": 0,
+        "end_column": 44,
+        "end_line": 4,
+        "line": 4,
+        "path": "tests/test_service.py"
+      },
+      "display_name": "tests.test_service.test_total",
+      "evidence_class": "direct_static_call",
+      "evidence_paths": [
+        {
+          "origin_change_id": "ecde9ad49cdaa32f17ea47b0",
+          "snapshot": "after",
+          "steps": [
+            {
+              "callee": "service.calculate_total",
+              "caller": "tests.test_service.test_total",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 25,
+                "end_column": 44,
+                "end_line": 4,
+                "line": 4,
+                "path": "tests/test_service.py"
+              }
+            }
+          ],
+          "tree": "6f4de969510fff6838bf5501659291d1d07ae6eb"
+        },
+        {
+          "origin_change_id": "ecde9ad49cdaa32f17ea47b0",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "service.calculate_total",
+              "caller": "tests.test_service.test_total",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 25,
+                "end_column": 44,
+                "end_line": 4,
+                "line": 4,
+                "path": "tests/test_service.py"
+              }
+            }
+          ],
+          "tree": "d5534913355bb73557ebfdae96da10e39c9847c1"
+        }
+      ],
+      "import_evidence": [],
+      "origin_change_ids": [
+        "ecde9ad49cdaa32f17ea47b0"
+      ],
+      "provenance": "both",
+      "symbol_id": "eb6e8c6eb497800d6bfa687f"
+    },
+    {
+      "after": {
+        "column": 0,
+        "end_column": 40,
+        "end_line": 6,
+        "line": 6,
+        "path": "tests/test_service.py"
+      },
+      "before": {
+        "column": 0,
+        "end_column": 40,
+        "end_line": 6,
+        "line": 6,
+        "path": "tests/test_service.py"
+      },
+      "display_name": "tests.test_service.test_endpoint",
+      "evidence_class": "transitive_static_call",
+      "evidence_paths": [
+        {
+          "origin_change_id": "ecde9ad49cdaa32f17ea47b0",
+          "snapshot": "after",
+          "steps": [
+            {
+              "callee": "api.endpoint",
+              "caller": "tests.test_service.test_endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 28,
+                "end_column": 40,
+                "end_line": 6,
+                "line": 6,
+                "path": "tests/test_service.py"
+              }
+            },
+            {
+              "callee": "api.checkout",
+              "caller": "api.endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.same-module-function-v1",
+              "site": {
+                "column": 11,
+                "end_column": 22,
+                "end_line": 7,
+                "line": 7,
+                "path": "api.py"
+              }
+            },
+            {
+              "callee": "service.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 19,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "6f4de969510fff6838bf5501659291d1d07ae6eb"
+        },
+        {
+          "origin_change_id": "ecde9ad49cdaa32f17ea47b0",
+          "snapshot": "before",
+          "steps": [
+            {
+              "callee": "api.endpoint",
+              "caller": "tests.test_service.test_endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 28,
+                "end_column": 40,
+                "end_line": 6,
+                "line": 6,
+                "path": "tests/test_service.py"
+              }
+            },
+            {
+              "callee": "api.checkout",
+              "caller": "api.endpoint",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.same-module-function-v1",
+              "site": {
+                "column": 11,
+                "end_column": 22,
+                "end_line": 7,
+                "line": 7,
+                "path": "api.py"
+              }
+            },
+            {
+              "callee": "service.calculate_total",
+              "caller": "api.checkout",
+              "edge_type": "CALLS",
+              "explanation": "Unique lexical definition; runtime mutation remains possible.",
+              "resolver_rule": "python.imported-function-call-v1",
+              "site": {
+                "column": 11,
+                "end_column": 19,
+                "end_line": 4,
+                "line": 4,
+                "path": "api.py"
+              }
+            }
+          ],
+          "tree": "d5534913355bb73557ebfdae96da10e39c9847c1"
+        }
+      ],
+      "import_evidence": [],
+      "origin_change_ids": [
+        "ecde9ad49cdaa32f17ea47b0"
+      ],
+      "provenance": "both",
+      "symbol_id": "e95a9ff3d350df32aacf38ed"
+    },
+    {
+      "after": {
+        "column": 0,
+        "end_column": 26,
+        "end_line": 3,
+        "line": 1,
+        "path": "tests/test_import.py"
+      },
+      "before": {
+        "column": 0,
+        "end_column": 26,
+        "end_line": 3,
+        "line": 1,
+        "path": "tests/test_import.py"
+      },
+      "display_name": "tests.test_import",
+      "evidence_class": "import_reference_only",
+      "evidence_paths": [],
+      "import_evidence": [
+        {
+          "origin_change_ids": [
+            "ecde9ad49cdaa32f17ea47b0"
+          ],
+          "resolver_rule": "python.direct-from-import-v1",
+          "site": {
+            "column": 0,
+            "end_column": 35,
+            "end_line": 1,
+            "line": 1,
+            "path": "tests/test_import.py"
+          },
+          "snapshot": "before",
+          "tree": "d5534913355bb73557ebfdae96da10e39c9847c1"
+        },
+        {
+          "origin_change_ids": [
+            "ecde9ad49cdaa32f17ea47b0"
+          ],
+          "resolver_rule": "python.direct-from-import-v1",
+          "site": {
+            "column": 0,
+            "end_column": 35,
+            "end_line": 1,
+            "line": 1,
+            "path": "tests/test_import.py"
+          },
+          "snapshot": "after",
+          "tree": "6f4de969510fff6838bf5501659291d1d07ae6eb"
+        }
+      ],
+      "origin_change_ids": [
+        "ecde9ad49cdaa32f17ea47b0"
+      ],
+      "provenance": "both",
+      "symbol_id": "ae5ef7e89e1386ff20b365c5"
+    },
+    {
+      "after": {
+        "column": 0,
+        "end_column": 40,
+        "end_line": 6,
+        "line": 1,
+        "path": "tests/test_service.py"
+      },
+      "before": {
+        "column": 0,
+        "end_column": 40,
+        "end_line": 6,
+        "line": 1,
+        "path": "tests/test_service.py"
+      },
+      "display_name": "tests.test_service",
+      "evidence_class": "import_reference_only",
+      "evidence_paths": [],
+      "import_evidence": [
+        {
+          "origin_change_ids": [
+            "ecde9ad49cdaa32f17ea47b0"
+          ],
+          "resolver_rule": "python.direct-from-import-v1",
+          "site": {
+            "column": 0,
+            "end_column": 35,
+            "end_line": 1,
+            "line": 1,
+            "path": "tests/test_service.py"
+          },
+          "snapshot": "before",
+          "tree": "d5534913355bb73557ebfdae96da10e39c9847c1"
+        },
+        {
+          "origin_change_ids": [
+            "ecde9ad49cdaa32f17ea47b0"
+          ],
+          "resolver_rule": "python.direct-from-import-v1",
+          "site": {
+            "column": 0,
+            "end_column": 35,
+            "end_line": 1,
+            "line": 1,
+            "path": "tests/test_service.py"
+          },
+          "snapshot": "after",
+          "tree": "6f4de969510fff6838bf5501659291d1d07ae6eb"
+        }
+      ],
+      "origin_change_ids": [
+        "ecde9ad49cdaa32f17ea47b0"
+      ],
+      "provenance": "both",
+      "symbol_id": "40a88f12792bc2e29fee08ab"
+    }
+  ],
+  "repository": {
+    "root": "."
+  },
+  "schema": "ripple.report.v1",
+  "summary": {
+    "candidate_impact_count": 0,
+    "change_fact_count": 1,
+    "changed_symbol_count": 1,
+    "impacted_direct_count": 2,
+    "impacted_transitive_count": 2,
+    "related_test_count": 2,
+    "related_test_import_module_count": 2,
+    "relocation_candidate_count": 0
+  },
+  "symbol_matches": [
+    {
+      "after_symbol_id": "eb6e8c6eb497800d6bfa687f",
+      "before_symbol_id": "213d4c1bb15de3fc5b6fa13c",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "ace294a82bdbf2ec057d9032",
+      "before_symbol_id": "2e64810c45241b778456825c",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "b77c6cda10b6141a84532569",
+      "before_symbol_id": "342383e89e58737628e25c51",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "40a88f12792bc2e29fee08ab",
+      "before_symbol_id": "357584c1e3eac66f23fd6e11",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "954bba1e88c11404d2b5bc77",
+      "before_symbol_id": "57cad93b0ff5a39f4c77d520",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "3423c365db01a04a4ada0c90",
+      "before_symbol_id": "6c1dcd87c348c622bf15ee72",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "1257863d87110eba8bf23406",
+      "before_symbol_id": "7a9bac999a214678acb94db8",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "ae5ef7e89e1386ff20b365c5",
+      "before_symbol_id": "89ac660184100e756f61f0ed",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "c3cf58e54b5614ddd5c1a6d7",
+      "before_symbol_id": "cf5b30b6808a14d8776fa614",
+      "match_rule": "unique_path_qualname_kind-v1"
+    },
+    {
+      "after_symbol_id": "e95a9ff3d350df32aacf38ed",
+      "before_symbol_id": "e64c78831f0022ede3feba67",
+      "match_rule": "unique_path_qualname_kind-v1"
+    }
+  ],
+  "tool": {
+    "analyzer": "python-static-v1",
+    "base_config": "684cc0c464693e32c588576a",
+    "head_config": "684cc0c464693e32c588576a",
+    "name": "ripple",
+    "parser": "python.ast",
+    "parser_python": "3.12",
+    "rename_threshold": "90",
+    "version": "0.1.0.dev5"
+  }
+}

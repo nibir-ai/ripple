@@ -6,7 +6,7 @@ import ast
 import hashlib
 import json
 import types
-from dataclasses import fields, is_dataclass
+from dataclasses import MISSING, fields, is_dataclass
 from functools import cache
 from typing import Any, Literal, Union, get_args, get_origin, get_type_hints
 
@@ -51,7 +51,12 @@ def typed_value(value: Any, annotation: Any) -> Any:
         return {typed_value(k, args[0]): typed_value(v, args[1]) for k, v in value.items()}
     if isinstance(annotation, type) and is_dataclass(annotation):
         names, hints = record_types(annotation)
-        if not isinstance(value, dict) or set(value) != names:
+        required = {
+            f.name
+            for f in fields(annotation)
+            if f.default is MISSING and f.default_factory is MISSING
+        }
+        if not isinstance(value, dict) or not required <= set(value) or not set(value) <= names:
             raise ValueError("Invalid record fields")
         return annotation(**{k: typed_value(v, hints[k]) for k, v in value.items()})
     if annotation in (str, int, bool):

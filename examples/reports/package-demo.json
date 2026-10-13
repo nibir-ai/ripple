@@ -63,6 +63,7 @@
       "status": "modified"
     }
   ],
+  "impact_groups": [],
   "impacts": [
     {
       "additional_paths_possible": false,
@@ -370,8 +371,12 @@
     "id": "python-callers-v1",
     "include_candidates": false,
     "max_depth": 8,
-    "max_nodes": 5000
+    "max_edges": 100000,
+    "max_nodes": 5000,
+    "max_paths_per_target": 16,
+    "query_timeout_ms": 10000
   },
+  "related_tests": [],
   "repository": {
     "root": "."
   },
@@ -382,6 +387,8 @@
     "changed_symbol_count": 1,
     "impacted_direct_count": 1,
     "impacted_transitive_count": 2,
+    "related_test_count": 0,
+    "related_test_import_module_count": 0,
     "relocation_candidate_count": 0
   },
   "symbol_matches": [
@@ -439,6 +446,6 @@
     "parser": "python.ast",
     "parser_python": "3.12",
     "rename_threshold": "90",
-    "version": "0.1.0.dev4"
+    "version": "0.1.0.dev5"
   }
 }

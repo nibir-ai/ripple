@@ -15,6 +15,10 @@ serializer emits JSON. There is no UI-specific analyzer or persistence coupling.
 `indexing.py` orchestrates exact graph reuse or changed-file syntax reuse with a full
 semantic pass. `cache.py` owns SQLite migrations, publication and maintenance;
 `cache_codec.py` validates typed snapshot/report JSON and bounded AST JSON.
+`reports.py` validates report evidence and reads bounded saved data. `explain.py`
+selects an impact without ambiguous guessing and projects its originating changes.
+`test_selection.py` derives static test associations from the same paths and separately
+records weaker import-only module evidence. These operations never collect or run tests.
 
 ```text
 CLI → Git tree/blob source + source-root config → AST/scope facts → resolver → snapshot graph

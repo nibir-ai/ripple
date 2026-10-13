@@ -12,3 +12,4 @@ dist/
 .demo/
 .demo-package/
 .demo-rename/
+.demo-tests/

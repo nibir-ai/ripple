@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ripple-impact"
-version = "0.1.0.dev4"
+version = "0.1.0.dev5"
 description = "Offline, evidence-based Python change-impact analysis"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -34,7 +34,7 @@ addopts = "-ra"
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-extend-exclude = [".venv314", ".wheel-venv", ".demo", ".demo-package", ".demo-rename"]
+extend-exclude = [".venv314", ".wheel-venv", ".demo", ".demo-package", ".demo-rename", ".demo-tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]

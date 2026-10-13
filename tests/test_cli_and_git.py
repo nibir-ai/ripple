@@ -19,7 +19,7 @@ def cli(*args):
 
 
 def test_help_and_version():
-    assert cli("--version").stdout.decode().startswith("ripple 0.1.0.dev4")
+    assert cli("--version").stdout.decode().startswith("ripple 0.1.0.dev5")
     help_result = cli("--help")
     assert help_result.returncode == 0
     assert "uncommitted changes are excluded" in help_result.stdout.decode()

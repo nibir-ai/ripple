@@ -166,6 +166,26 @@ class Policy:
     max_depth: int = 8
     max_nodes: int = 5000
     include_candidates: bool = False
+    max_edges: int = 100000
+    max_paths_per_target: int = 16
+    query_timeout_ms: int = 10000
+
+    def __post_init__(self) -> None:
+        if self.id != "python-callers-v1" or self.include_candidates:
+            raise ValueError("Unsupported impact policy or candidate traversal")
+        if any(
+            type(n) is not int or n < 1
+            for n in (
+                self.max_depth,
+                self.max_nodes,
+                self.max_edges,
+                self.max_paths_per_target,
+                self.query_timeout_ms,
+            )
+        ):
+            raise ValueError("Policy limits must be positive integers")
+        if self.query_timeout_ms > 3600000:
+            raise ValueError("Query timeout must not exceed 3600000 ms")
 
 
 @dataclass(frozen=True)
@@ -191,6 +211,35 @@ class Comparison:
 
 
 @dataclass(frozen=True)
+class TestImport:
+    snapshot: Side
+    tree: str
+    site: Location
+    resolver_rule: str
+    origin_change_ids: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class RelatedTest:
+    symbol_id: str
+    display_name: str
+    evidence_class: str
+    provenance: str
+    origin_change_ids: tuple[str, ...]
+    evidence_paths: tuple[EvidencePath, ...]
+    import_evidence: tuple[TestImport, ...] = ()
+    before: Location | None = None
+    after: Location | None = None
+
+
+@dataclass(frozen=True)
+class ImpactGroup:
+    category: str
+    count: int
+    displayed_count: int
+
+
+@dataclass(frozen=True)
 class Report:
     schema: str
     tool: dict[str, str]
@@ -205,6 +254,8 @@ class Report:
     file_changes: tuple[FileChange, ...] = ()
     symbol_matches: tuple[SymbolMatch, ...] = ()
     match_candidates: tuple[MatchCandidate, ...] = ()
+    related_tests: tuple[RelatedTest, ...] = ()
+    impact_groups: tuple[ImpactGroup, ...] = ()
 
     def to_json(self) -> str:
         return json.dumps(asdict(self), ensure_ascii=True, sort_keys=True, indent=2) + "\n"

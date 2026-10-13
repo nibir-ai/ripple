@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.0.dev5 — 2026-10-13
+
+Added saved-report evidence inspection by symbol name, ID or source location, with
+explicit ambiguity errors and stale-cache checks. Impact traversal now limits edge
+work, query time and retained paths per target and reports every reached cap.
+Broad caller lists have compact text groups while retaining all findings in JSON.
+Related tests distinguish direct/transitive call paths from weaker test-module imports.
+Reports validate evidence origins, direction, provenance and summary counts before
+publication or inspection. Added a related-test demonstration and additive schema fields.
+
 ## 0.1.0.dev4 — 2026-10-12
 
 Versioned SQLite snapshots and analysis metadata, additive migrations,

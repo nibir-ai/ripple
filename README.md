@@ -4,7 +4,7 @@ See potential ripple effects of Python code changes, with source evidence, from 
 Ripple compares immutable Git trees, finds changed functions and follows statically
 supported caller relationships. Analysis runs locally without executing target code.
 
-**Status: Development preview (`0.1.0.dev4`).** Revision matching, SQLite
+**Status: Development preview (`0.1.0.dev5`).** Revision matching, SQLite
 snapshots and content-addressed syntax reuse are implemented. The TUI and full v0.1
 release are not yet available.
 
@@ -22,6 +22,9 @@ python -m venv .venv
 .venv\Scripts\ripple status --repo .demo-package
 .venv\Scripts\ripple doctor --repo .demo-package
 .venv\Scripts\ripple analyze --repo .demo-package --cache-stats
+.venv\Scripts\python examples/demo.py --destination .demo-tests --tests
+.venv\Scripts\ripple analyze --repo .demo-tests --strict
+.venv\Scripts\ripple explain tests.test_service.test_endpoint --repo .demo-tests
 ```
 
 On Linux/macOS use `.venv/bin/python` and `.venv/bin/ripple`.
@@ -55,6 +58,7 @@ Method paths explicitly qualify runtime dispatch. No callers found does not prov
 `--strict` exits 4 when analysis is partial. Configuration is never read from dirty source files.
 
 - [CLI contracts](docs/cli.md)
+- [Evidence reports and related tests](docs/reports.md)
 - [Analyzer semantics and limitations](docs/analyzer-semantics.md)
 - [Architecture](docs/architecture.md)
 - [Revision comparison](docs/revision-comparison.md)

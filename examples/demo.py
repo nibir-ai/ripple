@@ -8,8 +8,13 @@ import subprocess
 from pathlib import Path
 
 
-def create_demo(destination: Path, package: bool = False, rename: bool = False) -> Path:
-    if package and rename:
+def create_demo(
+    destination: Path,
+    package: bool = False,
+    rename: bool = False,
+    tests: bool = False,
+) -> Path:
+    if sum((package, rename, tests)) > 1:
         raise ValueError("Choose only one demo mode.")
     destination = destination.resolve()
     destination.mkdir(parents=True, exist_ok=False)
@@ -81,7 +86,19 @@ def create_demo(destination: Path, package: bool = False, rename: bool = False) 
         "def endpoint(x):\n    return checkout(x)\n",
         encoding="utf-8",
     )
-    git("add", "--", "service.py", "api.py")
+    if tests:
+        (destination / "tests").mkdir()
+        (destination / "tests/test_service.py").write_text(
+            "from service import calculate_total\nfrom api import endpoint\n\n"
+            "def test_total(): return calculate_total(10)\n\n"
+            "def test_endpoint(): return endpoint(10)\n",
+            encoding="utf-8",
+        )
+        (destination / "tests/test_import.py").write_text(
+            "from service import calculate_total\n\ndef test_unrelated(): pass\n",
+            encoding="utf-8",
+        )
+    git("add", "--all")
     git("commit", "--quiet", "-m", "before")
     (destination / "service.py").write_text(
         "def calculate_total(x):\n    return x * 1.2\n", encoding="utf-8"
@@ -97,6 +114,7 @@ if __name__ == "__main__":
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--package", action="store_true", help="Generate src-layout method demo")
     modes.add_argument("--rename", action="store_true", help="Generate rename/obsolete import demo")
+    modes.add_argument("--tests", action="store_true", help="Generate static related-test demo")
     args = parser.parse_args()
-    root = create_demo(args.destination, args.package, args.rename)
+    root = create_demo(args.destination, args.package, args.rename, args.tests)
     print(f'Demo created. Run: ripple analyze --repo "{root}"')
